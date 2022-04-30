@@ -1,0 +1,20 @@
+{
+  "name": "literate-diff-viewer",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "vite dev"
+  },
+  "author": "abagames",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.6.4",
+    "vite": "^2.9.6"
+  },
+  "dependencies": {
+    "diff": "^5.0.0",
+    "diff2html": "^3.4.17",
+    "highlight.js": "^11.5.1",
+    "marked": "^4.0.14"
+  }
+}
