@@ -1,7 +1,7 @@
 {
   "name": "literate-diff-viewer",
   "version": "1.0.0",
-  "description": "",
+  "description": "Show source code description with literate diff way",
   "scripts": {
     "dev": "vite dev"
   },
