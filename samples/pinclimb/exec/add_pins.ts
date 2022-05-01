@@ -1,11 +1,13 @@
-title = "";
+import { ticks, vec } from "../../lib/crisp-game-lib/main";
 
-description = `
+export const title = "";
+
+export const description = `
 `;
 
-characters = [];
+export const characters = [];
 
-options = {};
+export const options = {};
 
 /** @type {Vector[]} */
 let pins;

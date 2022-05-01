@@ -125,17 +125,22 @@ function onScroll() {
   if (sourceIndex === pi) {
     return;
   }
-  const src1 =
+  const oldSrc =
     sourceIndex <= 0 ? "" : sourceFileNameElements[sourceIndex - 1].srcText;
-  const fileName1 =
+  const oldFileName =
     sourceIndex <= 0
       ? "(none)"
       : sourceFileNameElements[sourceIndex - 1].fileName;
-  const src2 =
+  const currentSrc =
     sourceIndex < 0 ? "" : sourceFileNameElements[sourceIndex].srcText;
-  const fileName2 =
+  const currentFileName =
     sourceIndex < 0 ? "(none)" : sourceFileNameElements[sourceIndex].fileName;
-  const diff = Diff.createTwoFilesPatch(fileName1, fileName2, src1, src2);
+  const diff = Diff.createTwoFilesPatch(
+    oldFileName,
+    currentFileName,
+    oldSrc,
+    currentSrc
+  );
   const diff2htmlUi = new Diff2HtmlUI(diffElement, diff, {
     drawFileList: false,
     fileListToggle: false,
@@ -147,4 +152,8 @@ function onScroll() {
     const e = elms.item(i) as HTMLElement;
     e.style.overflow = "hidden";
   }
+  const ce = new CustomEvent("sourcechange", {
+    detail: { oldFileName, currentFileName },
+  });
+  window.dispatchEvent(ce);
 }
