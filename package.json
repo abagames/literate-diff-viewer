@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "Show source code description with literate diff way",
   "scripts": {
-    "dev": "vite dev"
+    "build": "vite build",
+    "dev_samples": "vite dev --config vite_samples.config.js",
+    "build_samples": "vite build --config vite_samples.config.js",
+    "preview_samples": "vite preview --config vite_samples.config.js"
   },
   "author": "abagames",
   "license": "MIT",
