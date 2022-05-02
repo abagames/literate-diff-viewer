@@ -11,15 +11,29 @@ type Options = {
 };
 
 const defaultOptions: Options = {
-  readmeFileName: "./README.md",
-  srcDirectoryName: "./src",
+  readmeFileName: "README.md",
+  srcDirectoryName: "src",
 };
 
 let options: Options;
 
 export async function init(_options: Options = {}) {
   options = { ...defaultOptions, ..._options };
-  await loadMarkdown(options.readmeFileName);
+  const urlParams = new URLSearchParams(window.location.search);
+  let readmeFileName = options.readmeFileName;
+  if (urlParams.has("lang")) {
+    const lang = urlParams.get("lang");
+    const dotIndex = readmeFileName.indexOf(".");
+    if (dotIndex < 0) {
+      readmeFileName += `_${lang}`;
+    } else {
+      readmeFileName = `${readmeFileName.substring(
+        0,
+        dotIndex
+      )}_${lang}${readmeFileName.substring(dotIndex)}`;
+    }
+  }
+  await loadMarkdown(readmeFileName);
   addDiffView();
   onScroll();
   window.addEventListener("scroll", onScroll);
