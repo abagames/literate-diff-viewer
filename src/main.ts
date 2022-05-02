@@ -59,6 +59,8 @@ async function loadMarkdown(fileName: string) {
   const markdown = await markdownRes.text();
   const html = marked.parse(markdown);
   const markedDiv = document.createElement("div");
+  markedDiv.style.paddingLeft = "3%";
+  markedDiv.style.width = "47%";
   markedDiv.innerHTML = html;
   const srcPrefix = "(src)";
   const cns = markedDiv.childNodes;
