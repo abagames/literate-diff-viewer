@@ -25,19 +25,13 @@ z-index: 1;
 `;
   document.body.appendChild(floatDiv);
   setParentElement(floatDiv);
-  init({ update: () => {} });
+  initEmptyGame();
 }
 
 function onSourceChange(e: CustomEvent) {
   const fileName = e.detail.currentFileName;
   if (fileName === "(none)") {
-    init({
-      update: () => {},
-      title: "",
-      description: "",
-      characters: [],
-      options: {},
-    });
+    initEmptyGame();
     return;
   }
   const m = srcToModule[fileName];
@@ -47,6 +41,16 @@ function onSourceChange(e: CustomEvent) {
     description: m.description,
     characters: m.characters,
     options: m.options,
+  });
+}
+
+function initEmptyGame() {
+  init({
+    update: () => {},
+    title: "",
+    description: "",
+    characters: [],
+    options: { isShowingScore: false },
   });
 }
 
