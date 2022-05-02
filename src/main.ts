@@ -11,8 +11,8 @@ type Options = {
 };
 
 const defaultOptions: Options = {
-  readmeFileName: "README.md",
-  srcDirectoryName: "src",
+  readmeFileName: "./README.md",
+  srcDirectoryName: "./src",
 };
 
 let options: Options;
@@ -23,7 +23,9 @@ export async function init(_options: Options = {}) {
   let readmeFileName = options.readmeFileName;
   if (urlParams.has("lang")) {
     const lang = urlParams.get("lang");
-    const dotIndex = readmeFileName.indexOf(".");
+    let si = readmeFileName.lastIndexOf("/");
+    si = si < 0 ? 0 : si;
+    const dotIndex = readmeFileName.indexOf(".", si);
     if (dotIndex < 0) {
       readmeFileName += `_${lang}`;
     } else {
@@ -33,6 +35,7 @@ export async function init(_options: Options = {}) {
       )}_${lang}${readmeFileName.substring(dotIndex)}`;
     }
   }
+  console.log(readmeFileName);
   await loadMarkdown(readmeFileName);
   addDiffView();
   onScroll();
