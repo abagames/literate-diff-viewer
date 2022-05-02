@@ -35,7 +35,6 @@ export async function init(_options: Options = {}) {
       )}_${lang}${readmeFileName.substring(dotIndex)}`;
     }
   }
-  console.log(readmeFileName);
   await loadMarkdown(readmeFileName);
   addDiffView();
   onScroll();
@@ -61,28 +60,23 @@ async function loadMarkdown(fileName: string) {
   const html = marked.parse(markdown);
   const markedDiv = document.createElement("div");
   markedDiv.innerHTML = html;
-  let elms = [];
-  markedDiv.childNodes.forEach((e) => elms.push(e));
   const srcPrefix = "(src)";
-  await Promise.all(
-    elms.map(async (e) => {
-      if (e.textContent.startsWith(srcPrefix)) {
-        const he = e as HTMLElement;
-        const fileName = he.textContent.substring(srcPrefix.length + 1).trim();
-        he.textContent = "";
-        const fetchedSrc = await fetch(
-          `${options.srcDirectoryName}/${fileName}`
-        );
-        const srcText = await fetchedSrc.text();
-        sourceFileNameElements.push({
-          element: he,
-          fileName,
-          srcText,
-        });
-        return Promise.resolve();
-      }
-    })
-  );
+  const cns = markedDiv.childNodes;
+  for (let i = 0; i < cns.length; i++) {
+    const e = cns.item(i);
+    if (e.textContent.startsWith(srcPrefix)) {
+      const he = e as HTMLElement;
+      const fileName = he.textContent.substring(srcPrefix.length + 1).trim();
+      he.textContent = "";
+      const fetchedSrc = await fetch(`${options.srcDirectoryName}/${fileName}`);
+      const srcText = await fetchedSrc.text();
+      sourceFileNameElements.push({
+        element: he,
+        fileName,
+        srcText,
+      });
+    }
+  }
   document.body.appendChild(markedDiv);
 }
 

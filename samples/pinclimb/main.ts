@@ -1,10 +1,15 @@
 import * as literateDiffViewer from "../../src/main";
-import { init, restart } from "../lib/crisp-game-lib/main";
+import { init } from "../lib/crisp-game-lib/main";
 import { setParentElement } from "../lib/crisp-game-lib/view";
 import * as template from "./exec/template";
 import * as add_pins from "./exec/add_pins";
+import * as completed from "./exec/completed";
 
-const srcToModule = { "template.js": template, "add_pins.js": add_pins };
+const srcToModule = {
+  "template.js": template,
+  "add_pins.js": add_pins,
+  "completed.js": completed,
+};
 
 function onLoad() {
   literateDiffViewer.init();
@@ -26,7 +31,7 @@ z-index: 1;
 function onSourceChange(e: CustomEvent) {
   const fileName = e.detail.currentFileName;
   if (fileName === "(none)") {
-    restart({
+    init({
       update: () => {},
       title: "",
       description: "",
@@ -36,7 +41,7 @@ function onSourceChange(e: CustomEvent) {
     return;
   }
   const m = srcToModule[fileName];
-  restart({
+  init({
     update: m.update,
     title: m.title,
     description: m.description,

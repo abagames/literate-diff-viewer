@@ -41,6 +41,13 @@ export function init(
   captureCanvasScale: number,
   _theme: Theme
 ) {
+  if (canvas != null) {
+    if (parentElement == null) {
+      document.body.removeChild(canvas);
+    } else {
+      parentElement.removeChild(canvas);
+    }
+  }
   size.set(_size);
   theme = _theme;
   viewBackground = _viewBackground;

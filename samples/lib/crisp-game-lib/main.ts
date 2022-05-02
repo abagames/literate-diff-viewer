@@ -173,6 +173,20 @@ export function rewind() {
   }
 }
 
+let isBgmPlaying = false;
+
+export function pauseSound() {
+  isSoundEnabled = false;
+  sss.stopBgm();
+}
+
+export function resumeSound() {
+  isSoundEnabled = true;
+  if (isBgmPlaying) {
+    sss.playBgm();
+  }
+}
+
 const soundEffectTypeToString: { [key in SoundEffectType]: string } = {
   coin: "c",
   laser: "l",
@@ -277,24 +291,13 @@ export function init(settings: {
   characters?: string[];
   options?: Options;
 }) {
-  restart(settings);
-  onLoad();
-}
-
-export function restart(settings: {
-  update: () => void;
-  title?: string;
-  description?: string;
-  characters?: string[];
-  options?: Options;
-}) {
   const win: any = window;
   win.update = settings.update;
   win.title = settings.title;
   win.description = settings.description;
   win.characters = settings.characters;
   win.options = settings.options;
-  ticks = 0;
+  onLoad();
 }
 
 export function onLoad() {
@@ -431,6 +434,9 @@ function initInGame() {
   if (isPlayingBgm && isSoundEnabled) {
     sss.playBgm();
   }
+  if (isPlayingBgm) {
+    isBgmPlaying = true;
+  }
   const randomSeed = seedRandom.getInt(999999999);
   random.setSeed(randomSeed);
   if (isReplayEnabled || isRewindEnabled) {
@@ -543,6 +549,9 @@ function initGameOver() {
   drawGameOver();
   if (isPlayingBgm && isSoundEnabled) {
     sss.stopBgm();
+  }
+  if (isPlayingBgm) {
+    isBgmPlaying = false;
   }
 }
 

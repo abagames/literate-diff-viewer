@@ -3,7 +3,7 @@ import * as letter from "./letter";
 import * as input from "./input";
 import * as color from "./color";
 import { VectorLike } from "./vector";
-import { Theme } from "./main";
+import { Color, Theme } from "./main";
 declare const sss;
 
 export type Options = {
@@ -38,12 +38,16 @@ const defaultOptions: Options = {
 };
 let options: Options;
 let textCacheEnableTicks = 10;
+let reqId;
 
 export function init(
   __init: () => void,
   __update: () => void,
   _options?: Options
 ) {
+  if (reqId != null) {
+    cancelAnimationFrame(reqId);
+  }
   _init = __init;
   _update = __update;
   options = { ...defaultOptions, ..._options };
@@ -64,7 +68,7 @@ export function init(
 }
 
 function update() {
-  requestAnimationFrame(update);
+  reqId = requestAnimationFrame(update);
   const now = window.performance.now();
   if (now < nextFrameTime - targetFps / 12) {
     return;

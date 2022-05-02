@@ -116,24 +116,29 @@ export const defaultOptions: Options = {
   isCheckingCollision: false,
 };
 
+let isInitialized = false;
+
 export function init() {
-  letterCanvas = document.createElement("canvas");
-  letterCanvas.width = letterCanvas.height = letterSize;
-  letterContext = letterCanvas.getContext("2d");
-  scaledLetterCanvas = document.createElement("canvas");
-  scaledLetterContext = scaledLetterCanvas.getContext("2d");
-  textImages = textPatterns.map((lp, i) => {
-    return {
-      ...createLetterImages(lp),
-      hitBox: getHitBox(String.fromCharCode(0x21 + i), false),
-    };
-  });
-  characterImages = textPatterns.map((lp, i) => {
-    return {
-      ...createLetterImages(lp),
-      hitBox: getHitBox(String.fromCharCode(0x21 + i), true),
-    };
-  });
+  if (!isInitialized) {
+    letterCanvas = document.createElement("canvas");
+    letterCanvas.width = letterCanvas.height = letterSize;
+    letterContext = letterCanvas.getContext("2d");
+    scaledLetterCanvas = document.createElement("canvas");
+    scaledLetterContext = scaledLetterCanvas.getContext("2d");
+    textImages = textPatterns.map((lp, i) => {
+      return {
+        ...createLetterImages(lp),
+        hitBox: getHitBox(String.fromCharCode(0x21 + i), false),
+      };
+    });
+    characterImages = textPatterns.map((lp, i) => {
+      return {
+        ...createLetterImages(lp),
+        hitBox: getHitBox(String.fromCharCode(0x21 + i), true),
+      };
+    });
+    isInitialized = true;
+  }
   cachedImages = {};
 }
 

@@ -1,6 +1,7 @@
 import { Vector, VectorLike } from "./vector";
 import { Random } from "./random";
 import { isInRange } from "./util";
+import { pauseSound, resumeSound } from "./main";
 
 export const pos = new Vector();
 export let isPressed = false;
@@ -34,12 +35,14 @@ let screenPos = new Vector();
 let isDown = false;
 let isClicked = false;
 let isReleased = false;
+let isInitialized = false;
 
 export function init(
   _screen: HTMLElement,
   _pixelSize: Vector,
   _options?: Options
 ) {
+  isInDebugMode = false;
   options = { ...defaultOptions, ..._options };
   screen = _screen;
   pixelSize = new Vector(
@@ -56,36 +59,41 @@ export function init(
       screen.offsetTop + screen.clientWidth * (0.5 - options.anchor.y)
     );
   }
-  document.addEventListener("mousedown", (e) => {
-    onDown(e.pageX, e.pageY);
-  });
-  document.addEventListener("touchstart", (e) => {
-    onDown(e.touches[0].pageX, e.touches[0].pageY);
-  });
-  document.addEventListener("mousemove", (e) => {
-    onMove(e.pageX, e.pageY);
-  });
-  document.addEventListener(
-    "touchmove",
-    (e) => {
-      e.preventDefault();
-      onMove(e.touches[0].pageX, e.touches[0].pageY);
-    },
-    { passive: false }
-  );
-  document.addEventListener("mouseup", (e) => {
-    onUp(e);
-  });
-  document.addEventListener(
-    "touchend",
-    (e) => {
-      e.preventDefault();
-      (e.target as any).click();
+  if (!isInitialized) {
+    isInitialized = true;
+    document.addEventListener("mousedown", (e) => {
+      onDown(e.pageX, e.pageY);
+    });
+    document.addEventListener("touchstart", (e) => {
+      onDown(e.touches[0].pageX, e.touches[0].pageY);
+    });
+    document.addEventListener("mousemove", (e) => {
+      onMove(e.pageX, e.pageY);
+    });
+    document.addEventListener(
+      "touchmove",
+      (e) => {
+        e.preventDefault();
+        onMove(e.touches[0].pageX, e.touches[0].pageY);
+      },
+      { passive: false }
+    );
+    document.addEventListener("mouseup", (e) => {
       onUp(e);
-    },
-    { passive: false }
-  );
+    });
+    document.addEventListener(
+      "touchend",
+      (e) => {
+        e.preventDefault();
+        (e.target as any).click();
+        onUp(e);
+      },
+      { passive: false }
+    );
+  }
 }
+
+let isInDebugMode = false;
 
 export function update() {
   if (isCursorPosChanged) {
@@ -97,12 +105,20 @@ export function update() {
     options.isDebugMode &&
     !screenPos.isInRect(0, 0, pixelSize.x, pixelSize.y)
   ) {
+    if (!isInDebugMode) {
+      isInDebugMode = true;
+      pauseSound();
+    }
     updateDebug();
     pos.set(debugPos);
     isJustPressed = !isPressed && debugIsDown;
     isJustReleased = isPressed && !debugIsDown;
     isPressed = debugIsDown;
   } else {
+    if (isInDebugMode) {
+      isInDebugMode = false;
+      resumeSound();
+    }
     isJustPressed = !isPressed && isClicked;
     isJustReleased = isPressed && isReleased;
     isPressed = isDown;

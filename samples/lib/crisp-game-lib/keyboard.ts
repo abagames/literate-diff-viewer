@@ -191,7 +191,7 @@ export function init(_options?: Options) {
     if (options.onKeyDown != null) {
       options.onKeyDown();
     }
-    if (
+    /*if (
       e.code === "AltLeft" ||
       e.code === "AltRight" ||
       e.code === "ArrowRight" ||
@@ -200,7 +200,7 @@ export function init(_options?: Options) {
       e.code === "ArrowUp"
     ) {
       e.preventDefault();
-    }
+    }*/
   });
   document.addEventListener("keyup", (e) => {
     isKeyPressing = false;
