@@ -419,7 +419,8 @@ function createLetterImages(
   });
   const image = document.createElement("img");
   image.src = letterCanvas.toDataURL();
-  if (theme.isUsingPixi) {
+  //if (theme.isUsingPixi) {
+  if (typeof PIXI !== "undefined") {
     return { image, texture: PIXI.Texture.from(image) };
   }
   return { image };
