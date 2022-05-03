@@ -61,6 +61,9 @@ const sourceFileNameElements: {
 let sourceIndex = -2;
 
 async function loadMarkdown(fileName: string) {
+  const style = document.createElement("style");
+  style.innerText = "pre, code { background: #eee; }";
+  document.head.appendChild(style);
   marked.setOptions({
     highlight: function (code, lang) {
       return hljs.highlightAuto(code, [lang]).value;
@@ -71,7 +74,7 @@ async function loadMarkdown(fileName: string) {
   const html = marked.parse(markdown);
   markdownDiv = document.createElement("div");
   markdownDiv.style.paddingLeft = "3%";
-  markdownDiv.style.width = "47%";
+  markdownDiv.style.width = "45%";
   markdownDiv.innerHTML = html;
   const srcPrefix = "(src)";
   const srcHidePrefix = "(src_hide)";
@@ -107,7 +110,7 @@ position: fixed;
 left: 75%;
 top: 50%;
 transform: translate(-50%, -50%);
-width: 45%;
+width: 50%;
 height: 100%;
 overflow: hidden;
 `;
@@ -176,10 +179,15 @@ function onScroll() {
     fileContentToggle: false,
   });
   diff2htmlUi.draw();
-  const elms = document.getElementsByClassName("d2h-file-diff");
-  for (let i = 0; i < elms.length; i++) {
-    const e = elms.item(i) as HTMLElement;
+  const diffElms = document.getElementsByClassName("d2h-file-diff");
+  for (let i = 0; i < diffElms.length; i++) {
+    const e = diffElms.item(i) as HTMLElement;
     e.style.overflow = "hidden";
+  }
+  const tableElms = document.getElementsByClassName("d2h-diff-table");
+  for (let i = 0; i < tableElms.length; i++) {
+    const e = tableElms.item(i) as HTMLElement;
+    e.style.fontSize = "12px";
   }
   const ce = new CustomEvent("sourcechange", {
     detail: { oldFileName, currentFileName },
