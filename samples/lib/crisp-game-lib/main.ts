@@ -364,7 +364,7 @@ function _init() {
     title.trim().length > 0
   ) {
     isNoTitle = false;
-    document.title = title;
+    //document.title = title;
     seed += getHash(title);
   }
   if (typeof characters !== "undefined" && characters != null) {
