@@ -51,7 +51,7 @@
 
 <br><br><br><br>
 
-(src_hide) 1a_pins_variables_p.js
+(src_silent) 1a_pins_variables_p.js
 
 (src) [2_add_pins.js](./src/2_add_pins.js)
 

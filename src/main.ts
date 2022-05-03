@@ -52,10 +52,18 @@ export function start() {
   onScroll();
 }
 
+export type SrcType = "show" | "hide" | "silent";
+const srcPrefixes = {
+  show: "",
+  hide: "_hide",
+  silent: "_silent",
+};
+
 const sourceFileNameElements: {
   element: HTMLElement;
   fileName: string;
   srcText: string;
+  type: SrcType;
 }[] = [];
 
 let sourceIndex = -2;
@@ -76,26 +84,29 @@ async function loadMarkdown(fileName: string) {
   markdownDiv.style.paddingLeft = "3%";
   markdownDiv.style.width = "45%";
   markdownDiv.innerHTML = html;
-  const srcPrefix = "(src)";
-  const srcHidePrefix = "(src_hide)";
   const cns = markdownDiv.childNodes;
   for (let i = 0; i < cns.length; i++) {
     const e = cns.item(i);
     const tc = e.textContent;
-    if (tc.startsWith(srcPrefix) || tc.startsWith(srcHidePrefix)) {
-      const he = e as HTMLElement;
-      const pl = (tc.startsWith(srcPrefix) ? srcPrefix : srcHidePrefix).length;
-      const fileName = he.textContent.substring(pl + 1).trim();
-      if (tc.startsWith(srcHidePrefix)) {
-        he.textContent = "";
+    for (let type in srcPrefixes) {
+      const prefix = `(src${srcPrefixes[type]})`;
+      if (tc.startsWith(prefix)) {
+        const he = e as HTMLElement;
+        const fileName = he.textContent.substring(prefix.length + 1).trim();
+        if (type !== "show") {
+          he.textContent = "";
+        }
+        const fetchedSrc = await fetch(
+          `${options.srcDirectoryName}/${fileName}`
+        );
+        const srcText = await fetchedSrc.text();
+        sourceFileNameElements.push({
+          element: he,
+          fileName,
+          srcText,
+          type: type as SrcType,
+        });
       }
-      const fetchedSrc = await fetch(`${options.srcDirectoryName}/${fileName}`);
-      const srcText = await fetchedSrc.text();
-      sourceFileNameElements.push({
-        element: he,
-        fileName,
-        srcText,
-      });
     }
   }
   document.body.appendChild(markdownDiv);
@@ -167,30 +178,34 @@ function onScroll() {
     sourceIndex < 0 ? "" : sourceFileNameElements[sourceIndex].srcText;
   const currentFileName =
     sourceIndex < 0 ? "(none)" : sourceFileNameElements[sourceIndex].fileName;
-  const diff = Diff.createTwoFilesPatch(
-    oldFileName,
-    currentFileName,
-    oldSrc,
-    currentSrc
-  );
-  const diff2htmlUi = new Diff2HtmlUI(diffElement, diff, {
-    drawFileList: false,
-    fileListToggle: false,
-    fileContentToggle: false,
-  });
-  diff2htmlUi.draw();
-  const diffElms = document.getElementsByClassName("d2h-file-diff");
-  for (let i = 0; i < diffElms.length; i++) {
-    const e = diffElms.item(i) as HTMLElement;
-    e.style.overflow = "hidden";
-  }
-  const tableElms = document.getElementsByClassName("d2h-diff-table");
-  for (let i = 0; i < tableElms.length; i++) {
-    const e = tableElms.item(i) as HTMLElement;
-    e.style.fontSize = "12px";
+  const type: SrcType =
+    sourceIndex < 0 ? "hide" : sourceFileNameElements[sourceIndex].type;
+  if (type !== "silent") {
+    const diff = Diff.createTwoFilesPatch(
+      oldFileName,
+      currentFileName,
+      oldSrc,
+      currentSrc
+    );
+    const diff2htmlUi = new Diff2HtmlUI(diffElement, diff, {
+      drawFileList: false,
+      fileListToggle: false,
+      fileContentToggle: false,
+    });
+    diff2htmlUi.draw();
+    const diffElms = document.getElementsByClassName("d2h-file-diff");
+    for (let i = 0; i < diffElms.length; i++) {
+      const e = diffElms.item(i) as HTMLElement;
+      e.style.overflow = "hidden";
+    }
+    const tableElms = document.getElementsByClassName("d2h-diff-table");
+    for (let i = 0; i < tableElms.length; i++) {
+      const e = tableElms.item(i) as HTMLElement;
+      e.style.fontSize = "12px";
+    }
   }
   const ce = new CustomEvent("sourcechange", {
-    detail: { oldFileName, currentFileName },
+    detail: { oldFileName, currentFileName, type },
   });
   markdownDiv.dispatchEvent(ce);
 }

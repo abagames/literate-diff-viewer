@@ -47,10 +47,10 @@ function onSourceChange(e: CustomEvent) {
     initEmptyGame();
     return;
   }
-  const m = srcToModule[fileName];
-  if (m == null) {
+  if (e.type === "silent") {
     return;
   }
+  const m = srcToModule[fileName];
   init({
     update: m.update,
     title: m.title,
