@@ -19,6 +19,7 @@ const defaultOptions: Options = {
 
 let options: Options;
 let markdownDiv: HTMLDivElement;
+const scrollStorageKey = "scroll_position_y";
 
 export async function init(
   _options: Options = {}
@@ -43,7 +44,10 @@ export async function init(
   await loadMarkdown(readmeFileName);
   addDiffView();
   onScroll();
+  const sy = Number.parseInt(sessionStorage.getItem(scrollStorageKey)) || 0;
+  window.scrollTo(0, sy);
   window.addEventListener("scroll", onScroll);
+  window.addEventListener("beforeunload", onBeforeUnload);
   return { markdownDiv };
 }
 
@@ -177,4 +181,8 @@ function onScroll() {
     detail: { oldFileName, currentFileName },
   });
   markdownDiv.dispatchEvent(ce);
+}
+
+function onBeforeUnload() {
+  sessionStorage.setItem(scrollStorageKey, `${window.scrollY}`);
 }
