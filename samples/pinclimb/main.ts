@@ -1,14 +1,16 @@
 import * as literateDiffViewer from "../../src/main";
 import { init } from "../lib/crisp-game-lib/main";
 import { setParentElement } from "../lib/crisp-game-lib/view";
-import * as template from "./exec/template";
-import * as add_pins from "./exec/add_pins";
-import * as completed from "./exec/completed";
+import * as template from "./exec/0_template";
+import * as pins_variable from "./exec/1_pins_variable";
+import * as add_pins from "./exec/2_add_pins";
+import * as completed from "./exec/99_completed";
 
 const srcToModule = {
-  "template.js": template,
-  "add_pins.js": add_pins,
-  "completed.js": completed,
+  "0_template.js": template,
+  "1_pins_variable.js": pins_variable,
+  "2_add_pins.js": add_pins,
+  "99_completed.js": completed,
 };
 
 async function onLoad() {
@@ -30,6 +32,7 @@ z-index: 1;
   document.body.appendChild(floatDiv);
   setParentElement(floatDiv);
   initEmptyGame();
+  literateDiffViewer.start();
 }
 
 function onSourceChange(e: CustomEvent) {
@@ -39,6 +42,9 @@ function onSourceChange(e: CustomEvent) {
     return;
   }
   const m = srcToModule[fileName];
+  if (m == null) {
+    return;
+  }
   init({
     update: m.update,
     title: m.title,
