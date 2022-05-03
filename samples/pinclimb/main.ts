@@ -11,8 +11,12 @@ const srcToModule = {
   "completed.js": completed,
 };
 
-function onLoad() {
-  literateDiffViewer.init();
+async function onLoad() {
+  const diffViewer = await literateDiffViewer.init();
+  (diffViewer.markdownDiv as any).addEventListener(
+    "sourcechange",
+    onSourceChange
+  );
   const floatDiv = document.createElement("div");
   floatDiv.style.cssText = `
 position: fixed;
@@ -55,4 +59,3 @@ function initEmptyGame() {
 }
 
 window.addEventListener("load", onLoad);
-(window.addEventListener as any)("sourcechange", onSourceChange);

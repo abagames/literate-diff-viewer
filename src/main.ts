@@ -18,8 +18,11 @@ const defaultOptions: Options = {
 };
 
 let options: Options;
+let markdownDiv: HTMLDivElement;
 
-export async function init(_options: Options = {}) {
+export async function init(
+  _options: Options = {}
+): Promise<{ markdownDiv: HTMLDivElement }> {
   options = { ...defaultOptions, ..._options };
   const urlParams = new URLSearchParams(window.location.search);
   let readmeFileName = options.readmeFileName;
@@ -41,6 +44,7 @@ export async function init(_options: Options = {}) {
   addDiffView();
   onScroll();
   window.addEventListener("scroll", onScroll);
+  return { markdownDiv };
 }
 
 const sourceFileNameElements: {
@@ -60,12 +64,12 @@ async function loadMarkdown(fileName: string) {
   const markdownRes = await fetch(fileName);
   const markdown = await markdownRes.text();
   const html = marked.parse(markdown);
-  const markedDiv = document.createElement("div");
-  markedDiv.style.paddingLeft = "3%";
-  markedDiv.style.width = "47%";
-  markedDiv.innerHTML = html;
+  markdownDiv = document.createElement("div");
+  markdownDiv.style.paddingLeft = "3%";
+  markdownDiv.style.width = "47%";
+  markdownDiv.innerHTML = html;
   const srcPrefix = "(src)";
-  const cns = markedDiv.childNodes;
+  const cns = markdownDiv.childNodes;
   for (let i = 0; i < cns.length; i++) {
     const e = cns.item(i);
     if (e.textContent.startsWith(srcPrefix)) {
@@ -83,7 +87,7 @@ async function loadMarkdown(fileName: string) {
       });
     }
   }
-  document.body.appendChild(markedDiv);
+  document.body.appendChild(markdownDiv);
 }
 
 let diffElement: HTMLDivElement;
@@ -172,5 +176,5 @@ function onScroll() {
   const ce = new CustomEvent("sourcechange", {
     detail: { oldFileName, currentFileName },
   });
-  window.dispatchEvent(ce);
+  markdownDiv.dispatchEvent(ce);
 }
