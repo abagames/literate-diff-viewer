@@ -33,8 +33,8 @@ export function update() {
   }
   let scr = 0.02;
   pins.forEach((p) => {
-    box(p, 3);
     p.y += scr;
+    box(p, 3);
   });
   nextPinDist -= scr;
   while (nextPinDist < 0) {

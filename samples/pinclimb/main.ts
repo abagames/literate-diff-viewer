@@ -4,12 +4,18 @@ import { setParentElement } from "../lib/crisp-game-lib/view";
 import * as template from "./exec/0_template";
 import * as pins_variable from "./exec/1_pins_variable";
 import * as add_pins from "./exec/2_add_pins";
+import * as remove_pins from "./exec/3_remove_pins";
+import * as add_cord from "./exec/4_add_cord";
+import * as draw_cord from "./exec/5_draw_cord";
 import * as completed from "./exec/99_completed";
 
 const srcToModule = {
   "0_template.js": template,
   "1_pins_variable.js": pins_variable,
   "2_add_pins.js": add_pins,
+  "3_remove_pins.js": remove_pins,
+  "4_add_cord.js": add_cord,
+  "5_draw_cord.js": draw_cord,
   "99_completed.js": completed,
 };
 

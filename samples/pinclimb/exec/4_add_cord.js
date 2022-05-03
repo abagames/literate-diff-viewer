@@ -22,16 +22,21 @@ export const characters = [];
 
 export const options = {};
 
+/** @type {{angle: number, length: number, pin: Vector}} */
+let cord;
 /** @type {Vector[]} */
 let pins;
 let nextPinDist;
+const cordLength = 7;
 
 export function update() {
   if (!ticks) {
     pins = [vec(50, 0)];
     nextPinDist = 10;
+    cord = { angle: 0, length: cordLength, pin: pins[0] };
   }
   let scr = 0.02;
+  let nextPin;
   remove(pins, (p) => {
     p.y += scr;
     box(p, 3);

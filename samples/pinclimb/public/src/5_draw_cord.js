@@ -7,16 +7,22 @@ characters = [];
 
 options = {};
 
+/** @type {{angle: number, length: number, pin: Vector}} */
+let cord;
 /** @type {Vector[]} */
 let pins;
 let nextPinDist;
+const cordLength = 7;
 
 function update() {
   if (!ticks) {
     pins = [vec(50, 0)];
     nextPinDist = 10;
+    cord = { angle: 0, length: cordLength, pin: pins[0] };
   }
   let scr = 0.02;
+  cord.angle += 0.05;
+  line(cord.pin, vec(cord.pin).addWithAngle(cord.angle, cord.length));
   remove(pins, (p) => {
     p.y += scr;
     box(p, 3);
