@@ -8,11 +8,13 @@ import "diff2html/bundles/css/diff2html.min.css";
 type Options = {
   readmeFileName?: string;
   srcDirectoryName?: string;
+  isHidingSrcElement?: boolean;
 };
 
 const defaultOptions: Options = {
   readmeFileName: "./README.md",
   srcDirectoryName: "./src",
+  isHidingSrcElement: false,
 };
 
 let options: Options;
@@ -69,7 +71,9 @@ async function loadMarkdown(fileName: string) {
     if (e.textContent.startsWith(srcPrefix)) {
       const he = e as HTMLElement;
       const fileName = he.textContent.substring(srcPrefix.length + 1).trim();
-      he.textContent = "";
+      if (options.isHidingSrcElement) {
+        he.textContent = "";
+      }
       const fetchedSrc = await fetch(`${options.srcDirectoryName}/${fileName}`);
       const srcText = await fetchedSrc.text();
       sourceFileNameElements.push({
