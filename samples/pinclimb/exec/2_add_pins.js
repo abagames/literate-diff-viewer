@@ -28,8 +28,8 @@ let nextPinDist;
 
 export function update() {
   if (!ticks) {
-    pins = [vec(50, 0)];
-    nextPinDist = 10;
+    pins = [vec(50, 5)];
+    nextPinDist = 5;
   }
   let scr = 0.02;
   pins.forEach((p) => {

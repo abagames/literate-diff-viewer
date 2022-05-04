@@ -36,8 +36,8 @@ const cordLength = 7;
 
 export function update() {
   if (!ticks) {
-    pins = [vec(50, 0)];
-    nextPinDist = 10;
+    pins = [vec(50, 5)];
+    nextPinDist = 5;
     cord = { angle: 0, length: cordLength, pin: pins[0] };
   }
   let scr = difficulty * 0.02;
