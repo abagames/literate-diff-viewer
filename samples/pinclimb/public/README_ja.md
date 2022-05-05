@@ -1,6 +1,6 @@
 ## ワンボタンミニゲーム PIN CLIMB を作る
 
-この記事では、[crisp-game-lib](https://github.com/abagames/crisp-game-lib)を使ったワンボタンミニゲームの作り方を説明します。
+この記事では、[crisp-game-lib](https://github.com/abagames/crisp-game-lib/blob/master/README_ja.md) を使った、ワンボタンミニゲームの作り方を説明します。
 
 ワンボタンミニゲームを作るには、ワンボタンにどのような機能を割り当てるかが重要です。詳しくは、以下の記事を参照ください。
 
@@ -17,7 +17,7 @@
 
 <br><br><br><br>
 
-(src) [0_template.js](./src/0_template.js)
+(src_hide) 0_template.js
 
 ### テンプレートのソースコードを準備する
 
@@ -41,11 +41,11 @@
 
 <br><br><br><br>
 
-(src) [1_pins_variable.js](./src/1_pins_variable.js)
+(src_hide) 1_pins_variable.js
 
 ### ピンを表示する
 
-ピンを画面に表示します。`pins` 配列変数を宣言します。必須ではないですが、`@type` を含むコメントを使って、変数の型を宣言すると、エラー検出やコード補完をする際に役立ちます。`Vector` クラスは、(x, y)座標を扱う際に便利な関数群を備えた、 2 次元のベクトルを扱うクラスです。
+まず `pins` 配列変数を宣言します。必須ではないですが、`@type` を含むコメントを使って、変数の型を宣言すると、エラー検出やコード補完をする際に役立ちます。`Vector` クラスは、(x, y) 座標を扱う際に便利な関数群を備えた、 2 次元のベクトルを扱うクラスです。
 
 `pins` 変数を `[vec(50, 5)]` で初期化します。`vec()` 関数は、第 1 引数を x 座標、第 2 引数を y 座標とした、`Vector` インスタンスを生成します。
 
@@ -53,35 +53,37 @@
 
 <br><br><br><br>
 
-(src_silent) 1a_pins_variables_p.js
+(src_silent) 1a_pins_variable.js
 
-(src) [2_add_pins.js](./src/2_add_pins.js)
+(src_hide) 2_add_pins.js
 
 ### ピンを追加しスクロールさせる
 
-ピンをある程度の間隔で画面上端から出現させ、下にスクロールさせます。`nextPinDist` に次のピンまでの距離を設定します。`scr` にはスクロールする y 座標の距離を設定し、各ピンの y 座標に `scr` の値を加えます。
+ピンをある程度の間隔で画面上端から出現させ、下にスクロールさせます。`nextPinDist` 変数に次のピンまでの距離を設定します。`scr` 変数にはスクロールする y 方向の距離を設定し、各ピンの y 座標に `scr` の値を加えます。
 
 `nextPinDist` が 0 より小さな値になった場合、配列の `push` 関数を使って新たなピンを追加します。ピンの x 座標は `rnd` 関数を使ってランダムに設定します。`rnd` 関数は第 1 引数から第 2 引数までの間の値を返します。次のピンまでの距離も `rnd` 関数を使って算出し、`nextPinDist` に加算します。
 
 <br><br><br><br>
 
-(src) [3_remove_pins.js](./src/3_remove_pins.js)
+(src_hide) 3_remove_pins.js
 
 ### 画面から外れたピンを削除する
 
-画面下へスクロールして画面から外れたピンを削除しないと、いつまでも配列に残り続けてしまいます。`forEach` の代わりに `remove` 関数を使って画面から外れたピンを削除します。`remove` 関数は第 1 引数に繰り返し要素を取り出す配列を、第 2 引数に取り出した要素を引数として処理を行う関数を指定します。第 2 引数の関数が `true` を返すと、この要素は配列から削除されます（この関数は [lodash の remove 関数](https://lodash.com/docs/#remove) とほぼ同じ動作をします）。画面から外れた ( `pin.y > 102`  ) 時に `true` を返すことで、ピンを削除します。
+画面下へスクロールして画面から外れたピンを削除しないと、いつまでも配列にピンが残り続けてしまいます。`forEach` の代わりに `remove` 関数を使って画面から外れたピンを削除します。
+
+`remove` 関数は第 1 引数に繰り返し要素を取り出す配列を、第 2 引数に取り出した要素を引数として処理を行う関数を指定します。第 2 引数の関数が `true` を返すと、この要素は配列から削除されます（この関数は [lodash の remove 関数](https://lodash.com/docs/#remove) とほぼ同じ動作をします）。画面から外れた ( `pin.y > 102` ) 時に `true` を返すことで、ピンを削除します。
 
 <br><br><br><br>
 
-(src) [4_add_cord.js](./src/4_add_cord.js)
+(src_hide) 4_add_cord.js
 
 ### ひもを追加する
 
-変数 `cord` でひもを管理します。`cord` はひもの角度 ( `angle` ) 、長さ ( `length` ) 、中心のピン ( `pin` ) をプロパティに持ちます。`cord` も `if (!ticks) {}` 内で初期化します。
+`cord` 変数でひもを管理します。`cord` はひもの角度 ( `angle` ) 、長さ ( `length` ) 、中心のピン ( `pin` ) をプロパティに持ちます。`cord` も `if (!ticks) {}` 内で初期化します。
 
 <br><br><br><br>
 
-(src) [5_draw_cord.js](./src/4_draw_cord.js)
+(src_hide) 5_draw_cord.js
 
 ### ひもを描画する
 
@@ -89,29 +91,29 @@
 
 <br><br><br><br>
 
-(src) [6_extend_cord.js](./src/6_extend_cord.js)
+(src_hide) 6_extend_cord.js
 
 ### ボタンを押すとひもが伸びる
 
-`input` 変数には、マウスやタッチパネル、キーボードからの入力状態が格納されます。`input.isPressed` 変数はボタンやタッチパネル、キーが押されている時に `true` になります。ここでは、ボタンを押した時にひもの長さを加算し、離した時に長さの初期値である `cordLength` に戻しています。
+`input` 変数には、マウスやタッチパネル、キーボードからの入力状態が格納されます。`input.isPressed` 変数はボタンやタッチパネル、キーが押されている時に `true` になります。ここでは、ボタンを押した時にひもの長さを加算し、離した時に長さの初期値である `cordLength` に戻します。
 
 画面右下のゲーム画面にマウスカーソルを合わせて、マウスボタンを押してみてください。ひもが伸びる動作が確認できます。
 
-また、このページでは、マウスカーソルがゲーム画面の外にある場合でもゲームの動作が分かりやすいように、ボタンを押す動作がランダムに行われます。ひもが自動的に伸びたり縮んだりするのは、この動作が行われているためです。
+このページでは、マウスカーソルがゲーム画面の外にある場合でもゲームの動作が分かりやすいように、ボタンを押す動作がランダムに行われます。ひもが自動的に伸びたり縮んだりするのは、この動作のためです。
 
 <br><br><br><br>
 
-(src) [7_scroll_cord.js](./src/7_scroll_cord.js)
+(src_hide) 7_scroll_cord.js
 
 ### ひもの位置に合わせてスクロールする
 
-このゲームではピンが画面上から下方向へスクロールするため、ひもが画面上部にあると画面の先の状況を見るのが難しくなります。そのため、ひもの中心のピンの y 座標が 80 より小さい場合、スクロールする距離を増やします。
+このゲームではピンが画面上端から下方向へスクロールするため、ひもが画面上部にあると画面の先の状況を見るのが難しくなります。そのため、ひもの中心のピンの y 座標が 80 より小さい場合、スクロールする距離を増やします。
 
 また、ひもが画面下へ到達した場合にゲームを終了させる処理も追加します。`end` 関数を呼び出すことで、ゲームオーバー状態へ遷移します。
 
 <br><br><br><br>
 
-(src) [8_move_to_pin.js](./src/8_move_to_pin.js)
+(src_hide) 8_move_to_pin.js
 
 ### ひもが別のピンへ移動する
 
@@ -123,5 +125,136 @@
 
 ひもと衝突したピンを `nextPin` 変数に格納し、ひもを `nextPin` へ移動させ、ひもの長さを初期値である `cordLength` へ戻します。
 
-<br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br>
+
+(src_hide) 9_add_score.js
+
+### スコアを加算する
+
+プレイヤーの腕前に合わせて正しくスコアを加算することが、ミニゲームとして成り立つためには必要です。ここではひもが別のピンに移動した時に、その移動距離をスコアに加算することにします。移動距離は `Vector` クラスの `distanceTo` 関数を用いて計算します。
+
+`addScore` 関数の第 1 引数に、加算するスコアを与えることで、スコアを加算します。第 2 引数に座標を与えると、その座標に加算されたスコアを表示します。第 2 引数は必須ではなく、省略するとスコア表示は行いません。
+
+また、スコアの加算に応じて効果音が鳴るようにします。音を鳴らすには `play` 関数を使います。`play` 関数の第 1 引数で効果音の種類を指定します。ここで指定した `powerUp` の他に、`coin`, `select`, `hit`, `explosion`, `laser`, `jump` などの種類があります。
+
+<br>
+
+このページでは、ゲーム画面にマウスカーソルが合っている時のみ音が鳴ります。ゲーム画面にマウスカーソルを合わせて、ボタンを押してひもを伸ばし、ピンが移動する時に効果音が鳴ることを確認しましょう。
+
+<br><br><br><br>
+
+(src_hide) 10_play_ses.js
+
+### 他の効果音を追加する
+
+ピンが移動する時以外にも、効果音を鳴らします。ボタンを押した瞬間に `select` 音を鳴らします。ボタンを押した瞬間は `input.isJustPressed` が `true` になっているかを調べることで分かります。また、ゲームオーバーの時に `explosion` 音を鳴らします。
+
+<br><br><br><br>
+
+(src_hide) 11_adjust_difficulty.js
+
+### ゲームを徐々に難しくする
+
+ミニゲームでは、時間が経つごとに少しずつ難しくすることで、プレイヤーに緊張感を持たせることが重要です。ゲームを難しくするには、ゲームスピードを速くすることが有効です。
+
+`difficulty` 変数を使うことで、ゲームの難易度調整を行うことができます。`difficulty` はゲーム開始時には 1、その後 1 分経過すると 2、という具合に 1 分ごとに 1 つずつ値が増加します。`difficulty` をソースコード内で参照し、様々な動作のスピードを上げます。
+
+ここでは、スクロール速度、ひもの伸びる速度、ひもの回転速度を徐々に増加させます。
+
+これでゲーム本体のソースコードは完成です。
+
+<br><br><br><br>
+
+(src_hide) 12_set_options.js
+
+### タイトル、説明、オプションを設定する
+
+タイトル ( `title` ) と ゲームの説明文 ( `description` ) を設定すると、ゲーム開始前のタイトル画面にそれらのテキストが表示されます。また、`options` でオプションを設定できます。ここでは、BGM の再生 ( `isPlayingBgm` ) および、ゲームオーバ後のタイトル画面での前回のゲームのリプレイ表示 ( `isReplayEnabled` ) を有効にします。
+
+ゲーム画面にマウスカーソルを合わせると、BGM が流れることが確認できます。そのままゲームオーバーになり、タイトル画面に戻ると、前回のプレイ内容が表示されます。
+
+<br><br><br><br>
+
+(src_hide) 13_change_sound.js
+
+### 音を調整する
+
+`isPlaingBgm` を有効にすると、BGM が自動生成され、ゲーム中に BGM が流れるようになります。また、`play` 関数で鳴る効果音も同様に自動生成されます。これらの音は、`options` において `seed` を設定することで変更できます。気に入った BGM や効果音になるまで、`seed` に色々な数値を設定してみましょう。
+
+<br><br><br><br>
+
+(src_hide) 99_completed.js
+
+### 完成！
+
+これで完成です。`crisp-game-lib` を使ったゲームは[他にもたくさんある](https://github.com/abagames/crisp-game-lib/blob/master/README_ja.md#%E3%83%87%E3%83%A2-%E7%94%BB%E5%83%8F%E3%82%92%E3%82%AF%E3%83%AA%E3%83%83%E3%82%AF%E3%81%99%E3%82%8C%E3%81%B0%E9%81%8A%E3%81%B9%E3%81%BE%E3%81%99)ので、それらも参照ください。ソースコードはすべて[サンプルコード](https://github.com/abagames/crisp-game-lib/blob/master/README_ja.md#%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB%E3%82%B3%E3%83%BC%E3%83%89)として公開されています。
+
+最終的なソースコードは、以下の通りです。
+
+```js
+title = "PIN CLIMB";
+
+description = `
+[Hold] Stretch
+`;
+
+characters = [];
+
+options = {
+  isPlayingBgm: true,
+  isReplayEnabled: true,
+  seed: 400,
+};
+
+/** @type {{angle: number, length: number, pin: Vector}} */
+let cord;
+/** @type {Vector[]} */
+let pins;
+let nextPinDist;
+const cordLength = 7;
+
+function update() {
+  if (!ticks) {
+    pins = [vec(50, 5)];
+    nextPinDist = 5;
+    cord = { angle: 0, length: cordLength, pin: pins[0] };
+  }
+  let scr = difficulty * 0.02;
+  if (cord.pin.y < 80) {
+    scr += (80 - cord.pin.y) * 0.1;
+  }
+  if (input.isJustPressed) {
+    play("select");
+  }
+  if (input.isPressed) {
+    cord.length += difficulty;
+  } else {
+    cord.length += (cordLength - cord.length) * 0.1;
+  }
+  cord.angle += difficulty * 0.05;
+  line(cord.pin, vec(cord.pin).addWithAngle(cord.angle, cord.length));
+  if (cord.pin.y > 98) {
+    play("explosion");
+    end();
+  }
+  let nextPin;
+  remove(pins, (p) => {
+    p.y += scr;
+    if (box(p, 3).isColliding.rect.black && p !== cord.pin) {
+      nextPin = p;
+    }
+    return p.y > 102;
+  });
+  if (nextPin != null) {
+    play("powerUp");
+    addScore(ceil(cord.pin.distanceTo(nextPin)), nextPin);
+    cord.pin = nextPin;
+    cord.length = cordLength;
+  }
+  nextPinDist -= scr;
+  while (nextPinDist < 0) {
+    pins.push(vec(rnd(10, 90), -2 - nextPinDist));
+    nextPinDist += rnd(5, 15);
+  }
+}
+```

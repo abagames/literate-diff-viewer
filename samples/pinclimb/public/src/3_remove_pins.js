@@ -1,17 +1,32 @@
-title = "";
+import {
+  line,
+  box,
+  input,
+  play,
+  addScore,
+  end,
+  ticks,
+  difficulty,
+  remove,
+  vec,
+  rnd,
+  ceil,
+} from "../../lib/crisp-game-lib/main";
 
-description = `
+export const title = "";
+
+export const description = `
 `;
 
-characters = [];
+export const characters = [];
 
-options = {};
+export const options = {};
 
 /** @type {Vector[]} */
 let pins;
 let nextPinDist;
 
-function update() {
+export function update() {
   if (!ticks) {
     pins = [vec(50, 5)];
     nextPinDist = 5;

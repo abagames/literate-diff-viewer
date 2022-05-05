@@ -24,6 +24,7 @@ export const options = {};
 
 /** @type {Vector[]} */
 let pins;
+let nextPinDist;
 
 export function update() {
   if (!ticks) {

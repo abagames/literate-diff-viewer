@@ -58,6 +58,8 @@ export function update() {
     return p.y > 102;
   });
   if (nextPin != null) {
+    play("powerUp");
+    addScore(ceil(cord.pin.distanceTo(nextPin)), nextPin);
     cord.pin = nextPin;
     cord.length = cordLength;
   }

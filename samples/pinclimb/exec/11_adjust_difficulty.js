@@ -35,18 +35,22 @@ export function update() {
     nextPinDist = 5;
     cord = { angle: 0, length: cordLength, pin: pins[0] };
   }
-  let scr = 0.02;
+  let scr = difficulty * 0.02;
   if (cord.pin.y < 80) {
     scr += (80 - cord.pin.y) * 0.1;
   }
+  if (input.isJustPressed) {
+    play("select");
+  }
   if (input.isPressed) {
-    cord.length += 1;
+    cord.length += difficulty;
   } else {
     cord.length += (cordLength - cord.length) * 0.1;
   }
-  cord.angle += 0.05;
+  cord.angle += difficulty * 0.05;
   line(cord.pin, vec(cord.pin).addWithAngle(cord.angle, cord.length));
   if (cord.pin.y > 98) {
+    play("explosion");
     end();
   }
   let nextPin;
@@ -58,6 +62,8 @@ export function update() {
     return p.y > 102;
   });
   if (nextPin != null) {
+    play("powerUp");
+    addScore(ceil(cord.pin.distanceTo(nextPin)), nextPin);
     cord.pin = nextPin;
     cord.length = cordLength;
   }
