@@ -10,8 +10,7 @@ const config = {
     lib: {
       entry: path.resolve(__dirname, "src/main.ts"),
       name: "literate-diff-viewer",
-      formats: ["umd"],
-      fileName: () => `literateDiffViewer.js`,
+      fileName: (format) => `literateDiffViewer.${format}.js`,
     },
     outDir: "build/",
     minify: false,
