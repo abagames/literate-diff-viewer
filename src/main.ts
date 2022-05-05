@@ -85,7 +85,11 @@ export function start() {
 
 async function loadMarkdown(fileName: string) {
   const style = document.createElement("style");
-  style.innerText = "pre, code { background: #eee; }";
+  style.innerText = `
+pre, code { background: #eee; }
+code { padding: 2px; }
+pre { padding: 10px; }
+`;
   document.head.appendChild(style);
   marked.setOptions({
     highlight: function (code, lang) {
