@@ -343,6 +343,7 @@ export function onLoad() {
   isDrawingParticleFront = opts.isDrawingParticleFront;
   isDrawingScoreFront = opts.isDrawingScoreFront;
   isSoundEnabled = opts.isSoundEnabled;
+  isBgmPlaying = false;
   if (opts.isMinifying) {
     showMinifiedScript();
   }
@@ -383,6 +384,7 @@ function _init() {
     ticks = 0;
   } else {
     initTitle();
+    ticks = 0;
   }
 }
 
