@@ -19,9 +19,28 @@ let options: Options;
 let markdownDiv: HTMLDivElement;
 const scrollStorageKey = "scroll_position_y";
 
-export async function init(
-  _options: Options = {}
-): Promise<{ markdownDiv: HTMLDivElement }> {
+export type SrcType = "show" | "hide" | "silent";
+const srcPrefixes = {
+  show: "",
+  hide: "_hide",
+  silent: "_silent",
+};
+
+export type SourceFileNameElement = {
+  element: HTMLElement;
+  fileName: string;
+  srcText: string;
+  type: SrcType;
+};
+
+const sourceFileNameElements: SourceFileNameElement[] = [];
+
+let sourceIndex = -2;
+
+export async function init(_options: Options = {}): Promise<{
+  markdownDiv: HTMLDivElement;
+  sourceFileNameElements: SourceFileNameElement[];
+}> {
   options = { ...defaultOptions, ..._options };
   const urlParams = new URLSearchParams(window.location.search);
   let readmeFileName = options.readmeFileName;
@@ -45,28 +64,15 @@ export async function init(
   window.scrollTo(0, sy);
   window.addEventListener("scroll", onScroll);
   window.addEventListener("beforeunload", onBeforeUnload);
-  return { markdownDiv };
+  return {
+    markdownDiv,
+    sourceFileNameElements,
+  };
 }
 
 export function start() {
   onScroll();
 }
-
-export type SrcType = "show" | "hide" | "silent";
-const srcPrefixes = {
-  show: "",
-  hide: "_hide",
-  silent: "_silent",
-};
-
-const sourceFileNameElements: {
-  element: HTMLElement;
-  fileName: string;
-  srcText: string;
-  type: SrcType;
-}[] = [];
-
-let sourceIndex = -2;
 
 async function loadMarkdown(fileName: string) {
   const style = document.createElement("style");

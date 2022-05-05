@@ -1,32 +1,22 @@
 import * as literateDiffViewer from "../../src/main";
 import { init } from "../lib/crisp-game-lib/main";
 import { setParentElement } from "../lib/crisp-game-lib/view";
-import * as template from "./exec/0_template";
-import * as pins_variable from "./exec/1_pins_variable";
-import * as add_pins from "./exec/2_add_pins";
-import * as remove_pins from "./exec/3_remove_pins";
-import * as add_cord from "./exec/4_add_cord";
-import * as draw_cord from "./exec/5_draw_cord";
-import * as extend_cord from "./exec/6_extend_cord";
-import * as scroll_cord from "./exec/7_scroll_cord";
-import * as move_to_pin from "./exec/8_move_to_pin";
-import * as completed from "./exec/99_completed";
 
-const srcToModule = {
-  "0_template.js": template,
-  "1_pins_variable.js": pins_variable,
-  "2_add_pins.js": add_pins,
-  "3_remove_pins.js": remove_pins,
-  "4_add_cord.js": add_cord,
-  "5_draw_cord.js": draw_cord,
-  "6_extend_cord.js": extend_cord,
-  "7_scroll_cord.js": scroll_cord,
-  "8_move_to_pin.js": move_to_pin,
-  "99_completed.js": completed,
-};
+let srcToModule;
+const executedSourceDirectory = "./exec/";
+const execModules = (import.meta as any).globEager("./exec/*.js");
 
 async function onLoad() {
   const diffViewer = await literateDiffViewer.init();
+  srcToModule = {};
+  for (let i = 0; i < diffViewer.sourceFileNameElements.length; i++) {
+    const e = diffViewer.sourceFileNameElements[i];
+    if (e.type === "silent") {
+      continue;
+    }
+    srcToModule[e.fileName] =
+      execModules[`${executedSourceDirectory}${e.fileName}`];
+  }
   (diffViewer.markdownDiv as any).addEventListener(
     "sourcechange",
     onSourceChange
@@ -53,7 +43,7 @@ function onSourceChange(e: CustomEvent) {
     initEmptyGame();
     return;
   }
-  if (e.type === "silent") {
+  if (e.detail.type === "silent") {
     return;
   }
   const m = srcToModule[fileName];
