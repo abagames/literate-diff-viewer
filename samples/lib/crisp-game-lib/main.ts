@@ -350,6 +350,7 @@ export function onLoad() {
 }
 
 function _init() {
+  isNoTitle = true;
   if (
     typeof description !== "undefined" &&
     description != null &&

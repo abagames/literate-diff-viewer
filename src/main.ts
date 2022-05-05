@@ -5,9 +5,19 @@ import { Diff2HtmlUI } from "diff2html/lib/ui/js/diff2html-ui-slim.js";
 import "highlight.js/styles/github.css";
 import "diff2html/bundles/css/diff2html.min.css";
 
-type Options = {
+export type SrcType = "show" | "hide" | "silent";
+
+export type SourceChangeEvent = {
+  oldFileName: string;
+  currentFileName: string;
+  type: SrcType;
+};
+
+export type Options = {
   readmeFileName?: string;
   srcDirectoryName?: string;
+  onSourceChange?: (event: SourceChangeEvent) => void;
+  postProcessSource?: (src: string) => string;
 };
 
 const defaultOptions: Options = {
@@ -19,7 +29,6 @@ let options: Options;
 let markdownDiv: HTMLDivElement;
 const scrollStorageKey = "scroll_position_y";
 
-export type SrcType = "show" | "hide" | "silent";
 const srcPrefixes = {
   show: "",
   hide: "_hide",
@@ -105,7 +114,10 @@ async function loadMarkdown(fileName: string) {
         const fetchedSrc = await fetch(
           `${options.srcDirectoryName}/${fileName}`
         );
-        const srcText = await fetchedSrc.text();
+        let srcText = await fetchedSrc.text();
+        if (options.postProcessSource != null) {
+          srcText = options.postProcessSource(srcText);
+        }
         sourceFileNameElements.push({
           element: he,
           fileName,
@@ -210,10 +222,9 @@ function onScroll() {
       e.style.fontSize = "12px";
     }
   }
-  const ce = new CustomEvent("sourcechange", {
-    detail: { oldFileName, currentFileName, type },
-  });
-  markdownDiv.dispatchEvent(ce);
+  if (options.onSourceChange != null) {
+    options.onSourceChange({ oldFileName, currentFileName, type });
+  }
 }
 
 function onBeforeUnload() {
