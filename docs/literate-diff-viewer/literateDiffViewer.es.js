@@ -51995,7 +51995,7 @@ const defaultOptions = {
 };
 let options;
 let markdownDiv;
-const scrollStorageKey = "scroll_position_y";
+let scrollStorageKey = "scroll_position_y";
 const srcPrefixes = {
   show: "",
   hide: "_hide",
@@ -52020,6 +52020,9 @@ async function init(_options = {}) {
   }
   await loadMarkdown(readmeFileName);
   addDiffView();
+  if (options.storageKeyName != null) {
+    scrollStorageKey += `_${options.storageKeyName}`;
+  }
   const sy = Number.parseInt(sessionStorage.getItem(scrollStorageKey)) || 0;
   window.scrollTo(0, sy);
   window.addEventListener("scroll", onScroll);
@@ -52045,6 +52048,9 @@ pre { padding: 10px; }
       return HighlightJS.highlightAuto(code, [lang]).value;
     }
   });
+  const loadingMessage = document.createElement("p");
+  loadingMessage.innerText = "Loading...";
+  document.body.appendChild(loadingMessage);
   const markdownRes = await fetch(fileName);
   const markdown2 = await markdownRes.text();
   const html = marked.parse(markdown2);
@@ -52078,6 +52084,7 @@ pre { padding: 10px; }
       }
     }
   }
+  document.body.removeChild(loadingMessage);
   document.body.appendChild(markdownDiv);
 }
 let diffElement;

@@ -52052,6 +52052,9 @@ pre { padding: 10px; }
         return HighlightJS.highlightAuto(code, [lang]).value;
       }
     });
+    const loadingMessage = document.createElement("p");
+    loadingMessage.innerText = "Loading...";
+    document.body.appendChild(loadingMessage);
     const markdownRes = await fetch(fileName);
     const markdown2 = await markdownRes.text();
     const html = marked.parse(markdown2);
@@ -52085,6 +52088,7 @@ pre { padding: 10px; }
         }
       }
     }
+    document.body.removeChild(loadingMessage);
     document.body.appendChild(markdownDiv);
   }
   let diffElement;

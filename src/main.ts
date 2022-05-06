@@ -100,6 +100,9 @@ pre { padding: 10px; }
       return hljs.highlightAuto(code, [lang]).value;
     },
   });
+  const loadingMessage = document.createElement("p");
+  loadingMessage.innerText = "Loading...";
+  document.body.appendChild(loadingMessage);
   const markdownRes = await fetch(fileName);
   const markdown = await markdownRes.text();
   const html = marked.parse(markdown);
@@ -135,6 +138,7 @@ pre { padding: 10px; }
       }
     }
   }
+  document.body.removeChild(loadingMessage);
   document.body.appendChild(markdownDiv);
 }
 
