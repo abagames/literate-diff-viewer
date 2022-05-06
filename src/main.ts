@@ -18,6 +18,7 @@ export type Options = {
   srcDirectoryName?: string;
   onSourceChange?: (event: SourceChangeEvent) => void;
   postProcessSource?: (src: string) => string;
+  storageKeyName?: string;
 };
 
 const defaultOptions: Options = {
@@ -27,7 +28,7 @@ const defaultOptions: Options = {
 
 let options: Options;
 let markdownDiv: HTMLDivElement;
-const scrollStorageKey = "scroll_position_y";
+let scrollStorageKey = "scroll_position_y";
 
 const srcPrefixes = {
   show: "",
@@ -69,6 +70,9 @@ export async function init(_options: Options = {}): Promise<{
   }
   await loadMarkdown(readmeFileName);
   addDiffView();
+  if (options.storageKeyName != null) {
+    scrollStorageKey += `_${options.storageKeyName}`;
+  }
   const sy = Number.parseInt(sessionStorage.getItem(scrollStorageKey)) || 0;
   window.scrollTo(0, sy);
   window.addEventListener("scroll", onScroll);

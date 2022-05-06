@@ -51995,7 +51995,7 @@ const defaultOptions = {
 };
 let options;
 let markdownDiv;
-const scrollStorageKey = "scroll_position_y";
+let scrollStorageKey = "scroll_position_y";
 const srcPrefixes = {
   show: "",
   hide: "_hide",
@@ -52020,6 +52020,9 @@ async function init(_options = {}) {
   }
   await loadMarkdown(readmeFileName);
   addDiffView();
+  if (options.storageKeyName != null) {
+    scrollStorageKey += `_${options.storageKeyName}`;
+  }
   const sy = Number.parseInt(sessionStorage.getItem(scrollStorageKey)) || 0;
   window.scrollTo(0, sy);
   window.addEventListener("scroll", onScroll);

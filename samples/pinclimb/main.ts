@@ -1,5 +1,5 @@
 import * as literateDiffViewer from "../../src/main";
-import { ex, init } from "../lib/crisp-game-lib/main";
+import { init } from "../lib/crisp-game-lib/main";
 import { setParentElement } from "../lib/crisp-game-lib/view";
 
 let srcToModule;
@@ -10,6 +10,7 @@ async function onLoad() {
   const diffViewer = await literateDiffViewer.init({
     onSourceChange,
     postProcessSource,
+    storageKeyName: "pinclimb",
   });
   srcToModule = {};
   for (let i = 0; i < diffViewer.sourceFileNameElements.length; i++) {
