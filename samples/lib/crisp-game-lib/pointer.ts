@@ -73,7 +73,7 @@ export function init(
     document.addEventListener(
       "touchmove",
       (e) => {
-        e.preventDefault();
+        //e.preventDefault();
         onMove(e.touches[0].pageX, e.touches[0].pageY);
       },
       { passive: false }
@@ -84,8 +84,8 @@ export function init(
     document.addEventListener(
       "touchend",
       (e) => {
-        e.preventDefault();
-        (e.target as any).click();
+        //e.preventDefault();
+        //(e.target as any).click();
         onUp(e);
       },
       { passive: false }
