@@ -52074,20 +52074,24 @@ pre { padding: 10px; }
           if (type !== "show") {
             he.textContent = "";
           }
-          const fetchedSrc = await fetch(`${options.srcDirectoryName}/${fileName2}`);
-          let srcText = await fetchedSrc.text();
-          if (options.postProcessSource != null) {
-            srcText = options.postProcessSource(srcText);
-          }
           sourceFileNameElements.push({
             element: he,
             fileName: fileName2,
-            srcText,
+            srcText: "",
             type
           });
         }
       }
     }
+    await Promise.all(sourceFileNameElements.map(async (e) => {
+      const fetchedSrc = await fetch(`${options.srcDirectoryName}/${e.fileName}`);
+      let srcText = await fetchedSrc.text();
+      if (options.postProcessSource != null) {
+        srcText = options.postProcessSource(srcText);
+      }
+      e.srcText = srcText;
+      return 0;
+    }));
     document.body.removeChild(loadingMessage);
     document.body.appendChild(markdownDiv);
   }
