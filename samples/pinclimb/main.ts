@@ -28,9 +28,9 @@ async function onLoad() {
   const floatDiv = document.createElement("div");
   floatDiv.style.cssText = `
 position: fixed;
-left: 90%;
-top: 80%;
-transform: translate(-50%, -50%);
+left: 98%;
+top: 98%;
+transform: translate(-100%, -100%);
 width: 35vmin;
 height: 35vmin;
 z-index: 1;
