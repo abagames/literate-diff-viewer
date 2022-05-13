@@ -23,7 +23,7 @@ export type Options = {
 
 const defaultOptions: Options = {
   readmeFileName: "./README.md",
-  srcDirectoryName: "./src",
+  srcDirectoryName: "./src/",
 };
 
 let options: Options;
@@ -134,7 +134,9 @@ pre { padding: 10px; }
   await Promise.all(
     sourceFileNameElements.map(async (e) => {
       const fetchedSrc = await fetch(
-        `${options.srcDirectoryName}/${e.fileName}`
+        `${options.srcDirectoryName}/${
+          options.srcDirectoryName.endsWith("/") ? "" : "/"
+        }${e.fileName}`
       );
       let srcText = await fetchedSrc.text();
       if (options.postProcessSource != null) {

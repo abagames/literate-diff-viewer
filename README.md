@@ -21,7 +21,7 @@ type SourceChangeEvent = {
 
 type Options = {
   readmeFileName?: string; // default: "./README.md"
-  srcDirectoryName?: string; // default:  "./src"
+  srcDirectoryName?: string; // default:  "./src/"
   onSourceChange?: (event: SourceChangeEvent) => void;
   postProcessSource?: (src: string) => string;
   storageKeyName?: string;
