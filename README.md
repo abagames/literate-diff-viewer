@@ -22,6 +22,7 @@ type SourceChangeEvent = {
 type Options = {
   readmeFileName?: string; // default: "./README.md"
   srcDirectoryName?: string; // default:  "./src/"
+  isFetchingFromOtherHost?: boolean; // default: false
   onSourceChange?: (event: SourceChangeEvent) => void;
   postProcessSource?: (src: string) => string;
   storageKeyName?: string;

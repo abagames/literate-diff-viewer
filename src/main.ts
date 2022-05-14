@@ -16,6 +16,7 @@ export type SourceChangeEvent = {
 export type Options = {
   readmeFileName?: string;
   srcDirectoryName?: string;
+  isFetchingFromOtherHost?: boolean;
   onSourceChange?: (event: SourceChangeEvent) => void;
   postProcessSource?: (src: string) => string;
   storageKeyName?: string;
@@ -24,6 +25,7 @@ export type Options = {
 const defaultOptions: Options = {
   readmeFileName: "./README.md",
   srcDirectoryName: "./src/",
+  isFetchingFromOtherHost: false,
 };
 
 let options: Options;
@@ -121,6 +123,16 @@ pre { padding: 10px; }
         const fileName = he.textContent.substring(prefix.length + 1).trim();
         if (type !== "show") {
           he.textContent = "";
+        } else if (options.isFetchingFromOtherHost) {
+          const si = fileName.lastIndexOf("/");
+          if (si >= 0) {
+            he.childNodes.forEach((c) => {
+              c.textContent = c.textContent.replaceAll(
+                fileName,
+                fileName.substring(si + 1)
+              );
+            });
+          }
         }
         sourceFileNameElements.push({
           element: he,
@@ -134,8 +146,11 @@ pre { padding: 10px; }
   await Promise.all(
     sourceFileNameElements.map(async (e) => {
       const fetchedSrc = await fetch(
-        `${options.srcDirectoryName}/${
-          options.srcDirectoryName.endsWith("/") ? "" : "/"
+        `${options.srcDirectoryName}${
+          options.srcDirectoryName.endsWith("/") ||
+          options.srcDirectoryName.length === 0
+            ? ""
+            : "/"
         }${e.fileName}`
       );
       let srcText = await fetchedSrc.text();
@@ -143,6 +158,10 @@ pre { padding: 10px; }
         srcText = options.postProcessSource(srcText);
       }
       e.srcText = srcText;
+      if (options.isFetchingFromOtherHost) {
+        const si = e.fileName.lastIndexOf("/");
+        e.fileName = e.fileName.substring(si + 1);
+      }
       return 0;
     })
   );

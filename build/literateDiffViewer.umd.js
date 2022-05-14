@@ -51995,7 +51995,8 @@ ${content}</tr>
   var diff2html_min = "";
   const defaultOptions = {
     readmeFileName: "./README.md",
-    srcDirectoryName: "./src"
+    srcDirectoryName: "./src/",
+    isFetchingFromOtherHost: false
   };
   let options;
   let markdownDiv;
@@ -52073,6 +52074,13 @@ pre { padding: 10px; }
           const fileName2 = he.textContent.substring(prefix.length + 1).trim();
           if (type !== "show") {
             he.textContent = "";
+          } else if (options.isFetchingFromOtherHost) {
+            const si = fileName2.lastIndexOf("/");
+            if (si >= 0) {
+              he.childNodes.forEach((c2) => {
+                c2.textContent = c2.textContent.replaceAll(fileName2, fileName2.substring(si + 1));
+              });
+            }
           }
           sourceFileNameElements.push({
             element: he,
@@ -52084,12 +52092,16 @@ pre { padding: 10px; }
       }
     }
     await Promise.all(sourceFileNameElements.map(async (e) => {
-      const fetchedSrc = await fetch(`${options.srcDirectoryName}/${e.fileName}`);
+      const fetchedSrc = await fetch(`${options.srcDirectoryName}${options.srcDirectoryName.endsWith("/") || options.srcDirectoryName.length === 0 ? "" : "/"}${e.fileName}`);
       let srcText = await fetchedSrc.text();
       if (options.postProcessSource != null) {
         srcText = options.postProcessSource(srcText);
       }
       e.srcText = srcText;
+      if (options.isFetchingFromOtherHost) {
+        const si = e.fileName.lastIndexOf("/");
+        e.fileName = e.fileName.substring(si + 1);
+      }
       return 0;
     }));
     document.body.removeChild(loadingMessage);

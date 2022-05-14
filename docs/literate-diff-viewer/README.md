@@ -41,7 +41,7 @@ You can refer to the source code by writing the following text in the `README.md
 
 (src) [0_animals_array.js](./src/0_animals_array.js)
 
-The newly appended source code will be displayed on the right side of the screen. The display is in [unified format of diff](https://en.wikipedia.org/wiki/Diff#Unified_format). Lines with `+` at the beginning are added lines, and lines with `-` are deleted lines.
+The newly appended source code will be displayed on the right side of the screen. The display is in a [unified format of diff](https://en.wikipedia.org/wiki/Diff#Unified_format). Lines with `+` at the beginning are added lines, and lines with `-` are deleted lines.
 
 (src) [1_push_dogs.js](./src/1_push_dogs.js)
 
