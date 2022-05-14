@@ -1,6 +1,6 @@
 ## How to use literate-diff-viewer
 
-This article explains how to use literate-diff-viewer. Literate diff is a source code description method influenced by [Literate programming](https://en.wikipedia.org/wiki/Literate_programming) and [Literate commits](http://www.petecorey.com/blog/2016/07/11/literate-commits/).
+This article explains how to use literate-diff-viewer.
 
 ### Placing files
 
@@ -21,15 +21,15 @@ Place the files as follows.
 
 For `literateDiffViewer.es.js`, `style.css` `index.html` and `main.js`, use the files in [this directory](https://github.com/abagames/literate-diff-viewer/tree/master/docs/literate-diff-viewer).
 
+### Placing source code files
+
+Place the source code files to be explained under the `src` directory.
+
+In the `src` directory, place several source code files that have been written incrementally in the order in which they are to be implemented.
+
 ### Write README.md
 
 Write a description of the source code in `README.md`.
-
-### Placing source code files
-
-Place the source code files to be described under the `src` directory.
-
-In the `src` directory, place several source code files that have been written incrementally in the order in which they are to be implemented.
 
 ### Refer to source code from README.md
 
