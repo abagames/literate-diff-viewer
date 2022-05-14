@@ -1,6 +1,6 @@
 ## How to use literate-diff-viewer for a committed source code file on GitHub
 
-This article explains how to use literate-diff-viewer with a committed file on GitHub.
+This article explains how to use [literate-diff-viewer](https://github.com/abagames/literate-diff-viewer) with a committed file on GitHub.
 
 ### Placing files
 

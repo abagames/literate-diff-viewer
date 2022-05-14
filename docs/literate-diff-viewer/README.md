@@ -1,6 +1,6 @@
 ## How to use literate-diff-viewer
 
-This article explains how to use literate-diff-viewer.
+This article explains how to use [literate-diff-viewer](https://github.com/abagames/literate-diff-viewer).
 
 ### Placing files
 
