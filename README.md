@@ -6,7 +6,7 @@ Show source code description with literate diff way. Literate diff is a source c
 
 ### How to use literate-diff-viewer
 
-- [Use for multiple source code files on the hosted server](https://abagames.github.io/literate-diff-viewer/literate-diff-viewer/).
+- [Use for multiple source code files on your web server](https://abagames.github.io/literate-diff-viewer/literate-diff-viewer/).
 - [Use for a committed source code file on GitHub](https://abagames.github.io/literate-diff-viewer/literate-diff-viewer-for-commits/).
 
 ### Reference

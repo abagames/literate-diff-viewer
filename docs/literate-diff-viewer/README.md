@@ -4,7 +4,7 @@ This article explains how to use literate-diff-viewer.
 
 ### Placing files
 
-Place the files as follows.
+Place the files on your web server as follows.
 
 ```
 (root directory)

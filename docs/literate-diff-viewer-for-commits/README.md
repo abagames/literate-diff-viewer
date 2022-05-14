@@ -4,7 +4,7 @@ This article explains how to use literate-diff-viewer with a committed file on G
 
 ### Placing files
 
-Place the files as follows.
+Place the files on your web server (or GitHub pages) as follows.
 
 ```
 (root directory)
