@@ -19,7 +19,7 @@
 
 <br><br><br><br>
 
-(src_hide) 0_template.js
+(src) [0_template.js](./src/0_template.js)
 
 ### テンプレートのソースコードを準備する
 
@@ -43,7 +43,7 @@
 
 <br><br><br><br>
 
-(src_hide) 1_pins_variable.js
+(src) [1_pins_variable.js](./src/1_pins_variable.js)
 
 ### ピンを表示する
 
@@ -57,7 +57,7 @@
 
 (src_silent) 1a_pins_variable.js
 
-(src_hide) 2_add_pins.js
+(src) [2_add_pins.js](./src/2_add_pins.js)
 
 ### ピンを追加しスクロールさせる
 
@@ -67,7 +67,7 @@
 
 <br><br><br><br>
 
-(src_hide) 3_remove_pins.js
+(src) [3_remove_pins.js](./src/3_remove_pins.js)
 
 ### 画面から外れたピンを削除する
 
@@ -77,7 +77,7 @@
 
 <br><br><br><br>
 
-(src_hide) 4_add_cord.js
+(src) [4_add_cord.js](./src/4_add_cord.js)
 
 ### ひもを追加する
 
@@ -85,7 +85,7 @@
 
 <br><br><br><br>
 
-(src_hide) 5_draw_cord.js
+(src) [5_draw_cord.js](./src/5_draw_cord.js)
 
 ### ひもを描画する
 
@@ -93,7 +93,7 @@
 
 <br><br><br><br>
 
-(src_hide) 6_extend_cord.js
+(src) [6_extend_cord.js](./src/6_extend_cord.js)
 
 ### ボタンを押すとひもが伸びる
 
@@ -105,7 +105,7 @@
 
 <br><br><br><br>
 
-(src_hide) 7_scroll_cord.js
+(src) [7_scroll_cord.js](./src/7_scroll_cord.js)
 
 ### ひもの位置に合わせてスクロールする
 
@@ -115,7 +115,7 @@
 
 <br><br><br><br>
 
-(src_hide) 8_move_to_pin.js
+(src) [8_move_to_pin.js](./src/8_move_to_pin.js)
 
 ### ひもが別のピンへ移動する
 
@@ -129,7 +129,7 @@
 
 <br><br><br><br>
 
-(src_hide) 9_add_score.js
+(src) [9_add_score.js](./src/9_add_score.js)
 
 ### スコアを加算する
 
@@ -145,7 +145,7 @@
 
 <br><br><br><br>
 
-(src_hide) 10_play_ses.js
+(src) [10_play_ses.js](./src/10_play_ses.js)
 
 ### 他の効果音を追加する
 
@@ -153,7 +153,7 @@
 
 <br><br><br><br>
 
-(src_hide) 11_adjust_difficulty.js
+(src) [11_adjust_difficulty.js](./src/11_adjust_difficulty.js)
 
 ### ゲームを徐々に難しくする
 
@@ -167,7 +167,7 @@
 
 <br><br><br><br>
 
-(src_hide) 12_set_options.js
+(src) [12_set_options.js](./src/12_set_options.js)
 
 ### タイトル、説明、オプションを設定する
 
@@ -177,7 +177,7 @@
 
 <br><br><br><br>
 
-(src_hide) 13_change_sound.js
+(src) [13_change_sound.js](./src/13_change_sound.js)
 
 ### 音を調整する
 
@@ -185,7 +185,7 @@
 
 <br><br><br><br>
 
-(src_hide) 99_completed.js
+(src) [99_completed.js](./src/99_completed.js)
 
 ### 完成！
 

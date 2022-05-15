@@ -9,7 +9,6 @@ const execModules = (import.meta as any).globEager("./exec/*.js");
 async function onLoad() {
   const diffViewer = await literateDiffViewer.init({
     onSourceChange,
-    postProcessSource,
     storageKeyName: "pinclimb",
   });
   srcToModule = {};
@@ -39,35 +38,6 @@ z-index: 1;
   setParentElement(floatDiv);
   initEmptyGame();
   literateDiffViewer.start();
-}
-
-function postProcessSource(src: string): string {
-  const ibi = src.indexOf("import ");
-  const ies = `";`;
-  const iei = src.indexOf(ies);
-  src = removeFromTo(src, ibi, iei + ies.length).trim();
-  const ecs = "export const ";
-  for (;;) {
-    const eci = src.indexOf(ecs);
-    if (eci < 0) {
-      break;
-    }
-    src = removeFromTo(src, eci, eci + ecs.length);
-  }
-  const efs = "export function";
-  const es = "export ";
-  for (;;) {
-    const efi = src.indexOf(efs);
-    if (efi < 0) {
-      break;
-    }
-    src = removeFromTo(src, efi, efi + es.length);
-  }
-  return src;
-}
-
-function removeFromTo(str: string, from: number, to: number) {
-  return str.substring(0, from) + str.substring(to);
 }
 
 function onSourceChange(e: literateDiffViewer.SourceChangeEvent) {

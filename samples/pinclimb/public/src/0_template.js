@@ -1,28 +1,13 @@
-import {
-  line,
-  box,
-  input,
-  play,
-  addScore,
-  end,
-  ticks,
-  difficulty,
-  remove,
-  vec,
-  rnd,
-  ceil,
-} from "../../lib/crisp-game-lib/main";
+title = "";
 
-export const title = "";
-
-export const description = `
+description = `
 `;
 
-export const characters = [];
+characters = [];
 
-export const options = {};
+options = {};
 
-export function update() {
+function update() {
   if (!ticks) {
   }
 }

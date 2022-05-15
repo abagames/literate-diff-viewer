@@ -1,26 +1,11 @@
-import {
-  line,
-  box,
-  input,
-  play,
-  addScore,
-  end,
-  ticks,
-  difficulty,
-  remove,
-  vec,
-  rnd,
-  ceil,
-} from "../../lib/crisp-game-lib/main";
+title = "";
 
-export const title = "";
-
-export const description = `
+description = `
 `;
 
-export const characters = [];
+characters = [];
 
-export const options = {};
+options = {};
 
 /** @type {{angle: number, length: number, pin: Vector}} */
 let cord;
@@ -29,7 +14,7 @@ let pins;
 let nextPinDist;
 const cordLength = 7;
 
-export function update() {
+function update() {
   if (!ticks) {
     pins = [vec(50, 5)];
     nextPinDist = 5;
