@@ -2,7 +2,7 @@
 
 Show source code description with literate diff way. Literate diff is a source code description method influenced by [Literate programming](https://en.wikipedia.org/wiki/Literate_programming) and [Literate commits](http://www.petecorey.com/blog/2016/07/11/literate-commits/).
 
-<img src="./docs/screenshot.png" alt="screenshot"/>
+<img src="https://abagames.github.io/literate-diff-viewer/screenshot.png" alt="screenshot"/>
 
 ### How to use literate-diff-viewer
 
