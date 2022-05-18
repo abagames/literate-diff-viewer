@@ -35,7 +35,7 @@ In the lower right corner of the screen, the game screen realized by the current
 
 <br>
 
-Take a look at the template on the right side of the screen. `title` and `description` are variables to set the game title and description, `characters` define the pixel art displayed on the screen, and `options` are variables to put the game settings. These variables will be set later.
+Take a look at the template on the right side of the screen. `title` and `description` are variables to set the game title and description, `characters` define the pixel art displayed on the screen, and `options` are variables to put the game settings. These variables will be set later. See a reference of [char()](https://abagames.github.io/crisp-game-lib/ref_document/modules.html#char) and [Options](https://abagames.github.io/crisp-game-lib/ref_document/modules.html#Options) for more information.
 
 The `update` function describes the logic of the game. The `update` function is called 60 times per second to draw the game screen, respond to mouse operations, etc.
 
@@ -191,7 +191,7 @@ If `isPlaingBgm` is enabled, background music will be automatically generated an
 
 ### Finished!
 
-Now it's complete. There are [many more games](https://github.com/abagames/crisp-game-lib#demo-click-the-image-to-play) using `crisp-game-lib`. Please refer to them as well. All source code is available as [sample codes](https://github.com/abagames/crisp-game-lib#more-sample-codes).
+Now it's complete. There are [many more games](http://www.asahi-net.or.jp/~cs8k-cyu/browser.html) using `crisp-game-lib`. Please refer to them as well. All source code is available as [sample codes](https://github.com/abagames/crisp-game-lib-games/tree/main/docs).
 
 The final source code is as follows
 

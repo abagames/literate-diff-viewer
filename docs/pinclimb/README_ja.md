@@ -35,7 +35,7 @@
 
 <br>
 
-画面右のテンプレートを見てみましょう。`title` , `description` はゲームのタイトルと説明を設定するための変数、`characters` は画面に表示するドット絵を定義するための変数、`options` はゲームの設定を行うための変数です。これらの変数は後ほど設定します。
+画面右のテンプレートを見てみましょう。`title` , `description` はゲームのタイトルと説明を設定するための変数、`characters` は画面に表示するドット絵を定義するための変数、`options` はゲームの設定を行うための変数です。これらの変数は後ほど設定します。詳細については、 [char()](https://abagames.github.io/crisp-game-lib/ref_document/modules.html#char)と[Options](https://abagames.github.io/crisp-game-lib/ref_document/modules.html#Options)のリファレンスを参照ください。
 
 `update` 関数に、ゲームのロジックを記述します。`update` 関数は 1 秒に 60 回呼び出され、ゲーム画面の描画やマウス操作に反応する処理などを行います。
 
@@ -189,7 +189,7 @@
 
 ### 完成！
 
-これで完成です。`crisp-game-lib` を使ったゲームは[他にもたくさんある](https://github.com/abagames/crisp-game-lib/blob/master/README_ja.md#%E3%83%87%E3%83%A2-%E7%94%BB%E5%83%8F%E3%82%92%E3%82%AF%E3%83%AA%E3%83%83%E3%82%AF%E3%81%99%E3%82%8C%E3%81%B0%E9%81%8A%E3%81%B9%E3%81%BE%E3%81%99)ので、それらも参照ください。ソースコードはすべて[サンプルコード](https://github.com/abagames/crisp-game-lib/blob/master/README_ja.md#%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB%E3%82%B3%E3%83%BC%E3%83%89)として公開されています。
+これで完成です。`crisp-game-lib` を使ったゲームは[他にもたくさんある](http://www.asahi-net.or.jp/~cs8k-cyu/browser.html)ので、それらも参照ください。ソースコードはすべて[サンプルコード](https://github.com/abagames/crisp-game-lib-games/tree/main/docs)として公開されています。
 
 最終的なソースコードは、以下の通りです。
 
