@@ -49,9 +49,9 @@ The `ticks` variable in the `update` function is 0 when the game starts. `ticks`
 
 First, declare the `pins` array variable. It is not mandatory, but using a comment containing `@type` to declare the type of the variable is helpful for error detection and code completion. The `Vector` class is a two-dimensional vector class with functions useful for working with (x, y) coordinates.
 
-Initialize the `pins` variable with `[vec(50, 5)]`. The `vec()` function creates a `Vector` instance with the x-coordinate as the first argument and the y-coordinate as the second.
+Initialize the `pins` variable with `[vec(50, 5)]`. The `vec()` function creates a [Vector](https://abagames.github.io/crisp-game-lib/ref_document/classes/Vector.html) instance with the x-coordinate as the first argument and the y-coordinate as the second.
 
-`forEach` is used to draw a `box` with each element of `pins` as coordinates. The `box` function takes coordinates as its first argument and its size as its second argument. The `crisp-game-lib` screen consists of 100x100 dots, with (0, 0) at the top left and (99, 99) at the bottom right.
+`forEach` is used to draw a [box](https://abagames.github.io/crisp-game-lib/ref_document/modules.html#box) with each element of `pins` as coordinates. The `box` function takes coordinates as its first argument and its size as its second argument. The `crisp-game-lib` screen consists of 100x100 dots, with (0, 0) at the top left and (99, 99) at the bottom right.
 
 <br><br><br><br>
 
@@ -63,7 +63,7 @@ Initialize the `pins` variable with `[vec(50, 5)]`. The `vec()` function creates
 
 Make pins appear from the top of the screen at some interval and scroll down. Set the `nextPinDist` variable to the distance to the next pin. Set the distance in the y-direction to scroll to the `scr` variable. Add the value of `scr` to the y-coordinate of each pin.
 
-If `nextPinDist` is less than 0, add a new pin using the `push` function of the array. The x-coordinate of the pin is set randomly using the `rnd` function. The `rnd` function returns a value between the first and the second argument. The distance to the next pin is also calculated using the `rnd` function and added to `nextPinDist`.
+If `nextPinDist` is less than 0, add a new pin using the `push` function of the array. The x-coordinate of the pin is set randomly using the [rnd](https://abagames.github.io/crisp-game-lib/ref_document/modules.html#rnd) function. The `rnd` function returns a value between the first and the second argument. The distance to the next pin is also calculated using the `rnd` function and added to `nextPinDist`.
 
 <br><br><br><br>
 
@@ -71,7 +71,7 @@ If `nextPinDist` is less than 0, add a new pin using the `push` function of the 
 
 ### Deleting a pin that is off the screen
 
-If you do not remove a pin that has scrolled off the screen, the pin will remain in the array forever. Instead of `forEach`, use the `remove` function to remove the off-screen pins.
+If you do not remove a pin that has scrolled off the screen, the pin will remain in the array forever. Instead of `forEach`, use the [remove](https://abagames.github.io/crisp-game-lib/ref_document/modules.html#remove) function to remove the off-screen pins.
 
 The `remove` function takes an array as its first argument and a function as its second argument. The function receives each element of the array as a first argument. If the function returns `true`, this element is removed from the array (this function works almost identically to [lodash's remove function](https://lodash.com/docs/#remove)). The pin is removed by returning `true` from the function when off the screen ( `pin.y > 102` ).
 
@@ -91,7 +91,7 @@ The `cord` variable manages the cord. The `cord` has properties for the angle ( 
 
 Add the angles of the cord and rotate it. Then draw the cord using the `line` function.
 
-The `line` function draws a line connecting the coordinates of the first and second arguments. The function `addWithAngle` of `Vector` shifts the coordinates in the direction of the angle of the first argument by the distance of the second argument.
+The [line](https://abagames.github.io/crisp-game-lib/ref_document/modules.html#line) function draws a line connecting the coordinates of the first and second arguments. The function `addWithAngle` of `Vector` shifts the coordinates in the direction of the angle of the first argument by the distance of the second argument.
 
 <br><br><br><br>
 
@@ -99,7 +99,7 @@ The `line` function draws a line connecting the coordinates of the first and sec
 
 ### Cord extends when a button is pressed
 
-The `input` variable contains the input state from the mouse, touch screen, or keyboard. The `input.isPressed` variable is `true` when a button, touch screen or key is pressed. Here, the length of the cord is added when the button is pressed and returned to the initial `cordLength` value when the button is released.
+The [input](https://abagames.github.io/crisp-game-lib/ref_document/modules/input.html) variable contains the input state from the mouse, touch screen, or keyboard. The `input.isPressed` variable is `true` when a button, touch screen or key is pressed. Here, the length of the cord is added when the button is pressed and returned to the initial `cordLength` value when the button is released.
 
 Move the mouse cursor to the game screen in the lower right corner and press the mouse button. You will see the cord stretching.
 
@@ -113,7 +113,7 @@ To make it easier to understand the game behavior, even when the mouse cursor is
 
 Pins scroll down from the top of the screen, so it isn't easy to see what is happening beyond the screen if the cord is at the top. Therefore, if the y-coordinate of the pin at the center of the cord is less than 80, the scrolling distance is increased.
 
-We also add a process to end the game when the cord reaches the bottom of the screen. Calling the `end` function will cause the game to transition to the game-over state.
+We also add a process to end the game when the cord reaches the bottom of the screen. Calling the [end](https://abagames.github.io/crisp-game-lib/ref_document/modules.html#end) function will cause the game to transition to the game-over state.
 
 <br><br><br><br>
 
@@ -123,7 +123,7 @@ We also add a process to end the game when the cord reaches the bottom of the sc
 
 Add a process for moving the cord to the pin when a cord collides with another pin.
 
-To detect a collision, use the return value of the `box` function. By checking if `isColliding.rect.black` is `true`, you can test if the box collides with a black rectangle. The `line` function, used to draw a cord, draws a line consisting of several rectangles. Therefore, this test can determine if the drawn pins collide with the cord.
+To detect a [Collision](https://abagames.github.io/crisp-game-lib/ref_document/modules.html#Collision), use the return value of the `box` function. By checking if `isColliding.rect.black` is `true`, you can test if the box collides with a black rectangle. The `line` function, used to draw a cord, draws a line consisting of several rectangles. Therefore, this test can determine if the drawn pins collide with the cord.
 
 Drawing functions other than the `box` function can also check if they collide with another square by checking `isColliding` in the same way.
 
@@ -137,9 +137,9 @@ The pin that collides with the cord is stored in the `nextPin` variable. If `nex
 
 Adding up the score correctly according to the player's skill is necessary for the mini-game to be viable. In this example, when a cord moves to another pin, we add the moving distance to the score. The moving distance is calculated using the `distanceTo` function of the `Vector` class.
 
-The first argument of the `addScore` function is the score to be added. If you give a coordinate as the second argument, the score added is displayed at that coordinate. The second argument is optional, and the score is not shown if omitted.
+The first argument of the [addScore](https://abagames.github.io/crisp-game-lib/ref_document/modules.html#addScore) function is the score to be added. If you give a coordinate as the second argument, the score added is displayed at that coordinate. The second argument is optional, and the score is not shown if omitted.
 
-Also, a sound effect will be played according to the score addition. Use the `play` function to play the sound. The first argument of the `play` function specifies the type of sound effect. There are several types of sound effects, such as `coin`, `select`, `hit`, `explosion`, `laser`, `jump`, and so on, in addition to `powerUp` specified here.
+Also, a sound effect will be played according to the score addition. Use the [play](https://abagames.github.io/crisp-game-lib/ref_document/modules.html#play) function to play the sound. The first argument of the `play` function specifies the type of sound effect. There are several types of sound effects, such as `coin`, `select`, `hit`, `explosion`, `laser`, `jump`, and so on, in addition to `powerUp` specified here.
 
 <br>
 
