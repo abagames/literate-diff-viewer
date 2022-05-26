@@ -36,7 +36,6 @@ export function update() {
     cord = { angle: 0, length: cordLength, pin: pins[0] };
   }
   let scr = 0.02;
-  let nextPin;
   remove(pins, (p) => {
     p.y += scr;
     box(p, 3);
