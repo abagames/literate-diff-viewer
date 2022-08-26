@@ -139,6 +139,23 @@ export function play(type: SoundEffectType) {
   }
 }
 
+let bgmTrack;
+
+export function playBgm() {
+  if (typeof sss.generateMml === "function") {
+    bgmTrack = sss.playMml(sss.generateMml());
+  } else {
+    sss.playBgm();
+  }
+}
+
+export function stopBgm() {
+  if (bgmTrack != null) {
+    sss.stopMml(bgmTrack);
+  }
+  sss.stopBgm();
+}
+
 export function frameState(frameState: any) {
   if (isWaitingRewind) {
     const rs = replay.getLastFrameState(random);
@@ -177,13 +194,13 @@ let isBgmPlaying = false;
 
 export function pauseSound() {
   isSoundEnabled = false;
-  sss.stopBgm();
+  stopBgm();
 }
 
 export function resumeSound() {
   isSoundEnabled = true;
   if (isBgmPlaying) {
-    sss.playBgm();
+    playBgm();
   }
 }
 
@@ -435,7 +452,7 @@ function initInGame() {
   time = 0;
   scoreBoards = [];
   if (isPlayingBgm && isSoundEnabled) {
-    sss.playBgm();
+    playBgm();
   }
   if (isPlayingBgm) {
     isBgmPlaying = true;
@@ -551,7 +568,7 @@ function initGameOver() {
   ticks = -1;
   drawGameOver();
   if (isPlayingBgm && isSoundEnabled) {
-    sss.stopBgm();
+    stopBgm();
   }
   if (isPlayingBgm) {
     isBgmPlaying = false;
@@ -592,7 +609,7 @@ function initRewind() {
     text: "GiveUp",
   });
   if (isPlayingBgm && isSoundEnabled) {
-    sss.stopBgm();
+    stopBgm();
   }
   if (view.theme.isUsingPixi) {
     drawButton(rewindButton);
@@ -635,7 +652,7 @@ function stopRewind() {
   state = "inGame";
   _particle.init();
   if (isPlayingBgm && isSoundEnabled) {
-    sss.playBgm();
+    playBgm();
   }
 }
 

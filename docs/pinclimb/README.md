@@ -207,7 +207,7 @@ characters = [];
 options = {
   isPlayingBgm: true,
   isReplayEnabled: true,
-  seed: 400,
+  seed: 8,
 };
 
 /** @type {{angle: number, length: number, pin: Vector}} */
