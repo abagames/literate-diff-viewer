@@ -35,7 +35,7 @@
 
 <br>
 
-画面右のテンプレートを見てみましょう。`title` , `description` はゲームのタイトルと説明を設定するための変数、`characters` は画面に表示するドット絵を定義するための変数、`options` はゲームの設定を行うための変数です。これらの変数は後ほど設定します。詳細については、 [char()](https://abagames.github.io/crisp-game-lib/ref_document/modules.html#char)と[Options](https://abagames.github.io/crisp-game-lib/ref_document/modules.html#Options)のリファレンスを参照ください。
+画面右のテンプレートを見てみましょう。`title` , `description` はゲームのタイトルと説明を設定するための変数、`characters` は画面に表示するドット絵を定義するための変数、`options` はゲームの設定を行うための変数です。これらの変数は後ほど設定します。詳細については、 [char()](https://abagames.github.io/crisp-game-lib/ref_document/functions/char.html)と[Options](https://abagames.github.io/crisp-game-lib/ref_document/types/Options.html)のリファレンスを参照ください。
 
 `update` 関数に、ゲームのロジックを記述します。`update` 関数は 1 秒に 60 回呼び出され、ゲーム画面の描画やマウス操作に反応する処理などを行います。
 
@@ -51,7 +51,7 @@
 
 `pins` 変数を `[vec(50, 5)]` で初期化します。`vec()` 関数は、第 1 引数を x 座標、第 2 引数を y 座標とした、[Vector](https://abagames.github.io/crisp-game-lib/ref_document/classes/Vector.html) インスタンスを生成します。
 
-`forEach` を使って、`pins` の各要素を座標として [box](https://abagames.github.io/crisp-game-lib/ref_document/modules.html#box)、つまり四角を描画します。`box` 関数は第 1 引数に座標を、第 2 引数にその大きさを指定します。`crisp-game-lib` の画面は 100x100 ドットで構成されていて、左上が(0, 0)、右下が(99, 99)です。
+`forEach` を使って、`pins` の各要素を座標として [box](https://abagames.github.io/crisp-game-lib/ref_document/functions/box.html)、つまり四角を描画します。`box` 関数は第 1 引数に座標を、第 2 引数にその大きさを指定します。`crisp-game-lib` の画面は 100x100 ドットで構成されていて、左上が(0, 0)、右下が(99, 99)です。
 
 <br><br><br><br>
 
@@ -63,7 +63,7 @@
 
 ピンをある程度の間隔で画面上端から出現させ、下にスクロールさせます。`nextPinDist` 変数に次のピンまでの距離を設定します。`scr` 変数にはスクロールする y 方向の距離を設定し、各ピンの y 座標に `scr` の値を加えます。
 
-`nextPinDist` が 0 より小さな値になった場合、配列の `push` 関数を使って新たなピンを追加します。ピンの x 座標は [rnd](https://abagames.github.io/crisp-game-lib/ref_document/modules.html#rnd) 関数を使ってランダムに設定します。`rnd` 関数は第 1 引数から第 2 引数までの間の値を返します。次のピンまでの距離も `rnd` 関数を使って算出し、`nextPinDist` に加算します。
+`nextPinDist` が 0 より小さな値になった場合、配列の `push` 関数を使って新たなピンを追加します。ピンの x 座標は [rnd](https://abagames.github.io/crisp-game-lib/ref_document/functions/rnd.html) 関数を使ってランダムに設定します。`rnd` 関数は第 1 引数から第 2 引数までの間の値を返します。次のピンまでの距離も `rnd` 関数を使って算出し、`nextPinDist` に加算します。
 
 <br><br><br><br>
 
@@ -71,7 +71,7 @@
 
 ### 画面から外れたピンを削除する
 
-画面下へスクロールして画面から外れたピンを削除しないと、いつまでも配列にピンが残り続けてしまいます。`forEach` の代わりに [remove](https://abagames.github.io/crisp-game-lib/ref_document/modules.html#remove) 関数を使って画面から外れたピンを削除します。
+画面下へスクロールして画面から外れたピンを削除しないと、いつまでも配列にピンが残り続けてしまいます。`forEach` の代わりに [remove](https://abagames.github.io/crisp-game-lib/ref_document/functions/remove.html) 関数を使って画面から外れたピンを削除します。
 
 `remove` 関数は第 1 引数に繰り返し要素を取り出す配列を、第 2 引数に取り出した要素を引数として処理を行う関数を指定します。第 2 引数の関数が `true` を返すと、この要素は配列から削除されます（この関数は [lodash の remove 関数](https://lodash.com/docs/#remove) とほぼ同じ動作をします）。画面から外れた ( `pin.y > 102` ) 時に `true` を返すことで、ピンを削除します。
 
@@ -89,7 +89,7 @@
 
 ### ひもを描画する
 
-ひもの角度を加算して回転させます。その後、 [line](https://abagames.github.io/crisp-game-lib/ref_document/modules.html#line) 関数を使ってひもを描画します。`line` 関数は第 1 引数と第 2 引数の座標をつなぐ線を描画します。`Vector` の `addWithAngle` 関数は、第 1 引数の角度方向に、第 2 引数の距離分、座標をずらします。
+ひもの角度を加算して回転させます。その後、 [line](https://abagames.github.io/crisp-game-lib/ref_document/functions/line.html) 関数を使ってひもを描画します。`line` 関数は第 1 引数と第 2 引数の座標をつなぐ線を描画します。`Vector` の `addWithAngle` 関数は、第 1 引数の角度方向に、第 2 引数の距離分、座標をずらします。
 
 <br><br><br><br>
 
@@ -111,7 +111,7 @@
 
 このゲームではピンが画面上端から下方向へスクロールするため、ひもが画面上部にあると画面の先の状況を見るのが難しくなります。そのため、ひもの中心のピンの y 座標が 80 より小さい場合、スクロールする距離を増やします。
 
-また、ひもが画面下へ到達した場合にゲームを終了させる処理も追加します。 [end](https://abagames.github.io/crisp-game-lib/ref_document/modules.html#end) 関数を呼び出すことで、ゲームオーバー状態へ遷移します。
+また、ひもが画面下へ到達した場合にゲームを終了させる処理も追加します。 [end](https://abagames.github.io/crisp-game-lib/ref_document/functions/end.html) 関数を呼び出すことで、ゲームオーバー状態へ遷移します。
 
 <br><br><br><br>
 
@@ -121,7 +121,7 @@
 
 ひもが別のピンに引っかかった場合、そのピンへひもが移動する処理を追加します。あるピンがひもが衝突した時に、ひもをそのピンへ移動することで、この処理を実現します。
 
-衝突([Collision](https://abagames.github.io/crisp-game-lib/ref_document/modules.html#Collision))を判定するには、`box` 関数の返り値を使います。`isColliding.rect.black` が `true` であるかを確認することで、box が黒の四角に衝突しているかを判定できます。ひもを描画する `line` 関数は、複数の四角で線を描画します。そのため、この確認を行うことで、描画したピンがひもと衝突するかを判定できます。
+衝突([Collision](https://abagames.github.io/crisp-game-lib/ref_document/types/Collision.html))を判定するには、`box` 関数の返り値を使います。`isColliding.rect.black` が `true` であるかを確認することで、box が黒の四角に衝突しているかを判定できます。ひもを描画する `line` 関数は、複数の四角で線を描画します。そのため、この確認を行うことで、描画したピンがひもと衝突するかを判定できます。
 
 `box` 関数以外の描画関数も、同様に `isColliding` を確認することで、描画時に別の四角に衝突するかを確認できます。
 
@@ -135,9 +135,9 @@
 
 プレイヤーの腕前に合わせて正しくスコアを加算することが、ミニゲームとして成り立つためには必要です。ここではひもが別のピンに移動した時に、その移動距離をスコアに加算することにします。移動距離は `Vector` クラスの `distanceTo` 関数を用いて計算します。
 
-[addScore](https://abagames.github.io/crisp-game-lib/ref_document/modules.html#addScore) 関数の第 1 引数に、加算するスコアを与えることで、スコアを加算します。第 2 引数に座標を与えると、その座標に加算されたスコアを表示します。第 2 引数は必須ではなく、省略するとスコア表示は行いません。
+[addScore](https://abagames.github.io/crisp-game-lib/ref_document/functions/addScore.html) 関数の第 1 引数に、加算するスコアを与えることで、スコアを加算します。第 2 引数に座標を与えると、その座標に加算されたスコアを表示します。第 2 引数は必須ではなく、省略するとスコア表示は行いません。
 
-また、スコアの加算に応じて効果音が鳴るようにします。音を鳴らすには [play](https://abagames.github.io/crisp-game-lib/ref_document/modules.html#play) 関数を使います。`play` 関数の第 1 引数で効果音の種類を指定します。ここで指定した `powerUp` の他に、`coin`, `select`, `hit`, `explosion`, `laser`, `jump` などの種類があります。
+また、スコアの加算に応じて効果音が鳴るようにします。音を鳴らすには [play](https://abagames.github.io/crisp-game-lib/ref_document/functions/play.html) 関数を使います。`play` 関数の第 1 引数で効果音の種類を指定します。ここで指定した `powerUp` の他に、`coin`, `select`, `hit`, `explosion`, `laser`, `jump` などの種類があります。
 
 <br>
 
@@ -181,7 +181,7 @@
 
 ### 音を調整する
 
-`isPlaingBgm` を有効にすると、BGM が自動生成され、ゲーム中に BGM が流れるようになります。また、`play` 関数で鳴る効果音も同様に自動生成されます。これらの音は、`options` において `seed` を設定することで変更できます。気に入った BGM や効果音になるまで、`seed` に色々な数値を設定してみましょう。
+`isPlayingBgm` を有効にすると、BGM が自動生成され、ゲーム中に BGM が流れるようになります。また、`play` 関数で鳴る効果音も同様に自動生成されます。これらの音は、`options` において `seed` を設定することで変更できます。気に入った BGM や効果音になるまで、`seed` に色々な数値を設定してみましょう。
 
 <br><br><br><br>
 
