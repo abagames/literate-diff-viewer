@@ -1,4 +1,5 @@
 import { textPatterns } from "./textPattern";
+import { smallTextPatterns } from "./textPatternSmall";
 import {
   fillRect,
   setColor,
@@ -23,14 +24,27 @@ import { HitBox, hitBoxes, checkHitBoxes, Collision } from "./collision";
 import { wrap } from "./util";
 declare const PIXI;
 
+/**
+ * Options for drawing text and characters.
+ */
 export type LetterOptions = {
   color?: Color;
   backgroundColor?: Color;
+  /** A value from 0 to 3 that defines the direction of character rotation. */
   rotation?: number;
   mirror?: { x?: 1 | -1; y?: 1 | -1 };
   scale?: { x?: number; y?: number };
+  isSmallText?: boolean;
 };
 
+/**
+ * Draw a text.
+ * @param str
+ * @param x
+ * @param y
+ * @param options
+ * @returns Information about objects that collided during drawing.
+ */
 export function text(
   str: string,
   x: number | VectorLike,
@@ -40,6 +54,33 @@ export function text(
   return letters(false, str, x, y, options);
 }
 
+/**
+ * Draw a pixel art.
+ *
+ * You can define pixel arts (6x6 dots) of characters with `characters` array.
+ * Each letter represents a pixel color
+ * ( *l: black, r: red, g: green, b: blue, y: yellow, p: purple, c: cyan,
+ *  L: light_black, R: light_red, G: light_green, B: light_blue, Y: light_yellow,
+ *  P: light_purple, C: light_cyan* ).
+ * ```js
+ * characters = [
+ * `
+ *  r rr
+ * rrrrrr
+ *  grr
+ *  grr
+ * rrrrrr
+ * r rr
+ * `,
+ * ```
+ * Pixel arts are assigned from 'a'. `char("a", 0, 0)` draws the character
+ * defined by the first element of the `characters` array.
+ * @param str
+ * @param x
+ * @param y
+ * @param options
+ * @returns Information about objects that collided during drawing.
+ */
 export function char(
   str: string,
   x: number,
@@ -78,8 +119,10 @@ export function letters(
 }
 
 const dotCount = 6;
+const smallLetterDotCount = 4;
 const dotSize = 1;
 export const letterSize = dotCount * dotSize;
+export const smallLetterWidth = smallLetterDotCount * dotSize;
 
 export type LetterImage = {
   image: HTMLImageElement | HTMLCanvasElement;
@@ -88,6 +131,7 @@ export type LetterImage = {
 };
 
 let textImages: LetterImage[];
+let smallTextImages: LetterImage[];
 let characterImages: LetterImage[];
 let cachedImages: { [key: string]: LetterImage };
 let isCacheEnabled = false;
@@ -102,6 +146,7 @@ export type Options = {
   rotation?: number;
   mirror?: { x?: 1 | -1; y?: 1 | -1 };
   scale?: { x?: number; y?: number };
+  isSmallText?: boolean;
   isCharacter?: boolean;
   isCheckingCollision?: boolean;
 };
@@ -112,33 +157,35 @@ export const defaultOptions: Options = {
   rotation: 0,
   mirror: { x: 1, y: 1 },
   scale: { x: 1, y: 1 },
+  isSmallText: false,
   isCharacter: false,
   isCheckingCollision: false,
 };
 
-let isInitialized = false;
-
 export function init() {
-  if (!isInitialized) {
-    letterCanvas = document.createElement("canvas");
-    letterCanvas.width = letterCanvas.height = letterSize;
-    letterContext = letterCanvas.getContext("2d");
-    scaledLetterCanvas = document.createElement("canvas");
-    scaledLetterContext = scaledLetterCanvas.getContext("2d");
-    textImages = textPatterns.map((lp, i) => {
-      return {
-        ...createLetterImages(lp),
-        hitBox: getHitBox(String.fromCharCode(0x21 + i), false),
-      };
-    });
-    characterImages = textPatterns.map((lp, i) => {
-      return {
-        ...createLetterImages(lp),
-        hitBox: getHitBox(String.fromCharCode(0x21 + i), true),
-      };
-    });
-    isInitialized = true;
-  }
+  letterCanvas = document.createElement("canvas");
+  letterCanvas.width = letterCanvas.height = letterSize;
+  letterContext = letterCanvas.getContext("2d");
+  scaledLetterCanvas = document.createElement("canvas");
+  scaledLetterContext = scaledLetterCanvas.getContext("2d");
+  textImages = textPatterns.map((lp, i) => {
+    return {
+      ...createLetterImages(lp),
+      hitBox: getHitBox(String.fromCharCode(0x21 + i), false),
+    };
+  });
+  smallTextImages = smallTextPatterns.map((lp, i) => {
+    return {
+      ...createLetterImages(lp),
+      hitBox: getHitBox(String.fromCharCode(0x21 + i), false),
+    };
+  });
+  characterImages = textPatterns.map((lp, i) => {
+    return {
+      ...createLetterImages(lp),
+      hitBox: getHitBox(String.fromCharCode(0x21 + i), true),
+    };
+  });
   cachedImages = {};
 }
 
@@ -170,6 +217,7 @@ export function print(
   let px = bx;
   let py = Math.floor(y);
   let collision: Collision = { isColliding: { rect: {}, text: {}, char: {} } };
+  const lw = options.isSmallText ? smallLetterWidth : letterSize;
   for (let i = 0; i < str.length; i++) {
     const c = str[i];
     if (c === "\n") {
@@ -196,7 +244,7 @@ export function print(
         },
       };
     }
-    px += letterSize * options.scale.x;
+    px += lw * options.scale.x;
   }
   return collision;
 }
@@ -222,7 +270,11 @@ export function printChar(
     return { isColliding: { rect: {}, text: {}, char: {} } };
   }
   const cc = cca - 0x21;
-  const li = options.isCharacter ? characterImages[cc] : textImages[cc];
+  const li = options.isCharacter
+    ? characterImages[cc]
+    : options.isSmallText
+    ? smallTextImages[cc]
+    : textImages[cc];
   const rotation = wrap(options.rotation, 0, 4);
   if (
     options.color === "black" &&
@@ -419,8 +471,7 @@ function createLetterImages(
   });
   const image = document.createElement("img");
   image.src = letterCanvas.toDataURL();
-  //if (theme.isUsingPixi) {
-  if (typeof PIXI !== "undefined") {
+  if (theme.isUsingPixi) {
     return { image, texture: PIXI.Texture.from(image) };
   }
   return { image };

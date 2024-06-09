@@ -6,7 +6,7 @@ This article explains how to create a one-button mini-game using [crisp-game-lib
 
 For a one-button mini-game, it is essential to decide what functions to assign to the one-button. For more information, please refer to the following articles.
 
-- [How to realize various actions in a one-button game](https://dev.to/abagames/how-to-realize-various-actions-in-a-one-button-game-fak)
+- [The Possibilities of One-Button Games](https://abagames.github.io/joys-of-small-game-development-en/restrictions/one_button.html)
 
 We will assign the function "stretch" to the button in the game we will make. The rules of the game are shown below.
 
@@ -183,7 +183,7 @@ When you hover the mouse cursor over the game screen, you will hear the BGM play
 
 ### Adjusting the sound
 
-If `isPlayingBgm` is enabled, background music will be automatically generated and played during the game. Also, the sound effects played by the `play` function will be generated automatically. These sounds can be changed by setting `seed` in the `options`. You can set various values for `seed` until you get the BGM and sound effects you like.
+If `isPlayingBgm` is enabled, background music will be automatically generated and played during the game. Also, the sound effects played by the `play` function will be generated automatically. These sounds can be changed by setting `audioSeed` in the `options`. You can set various values for `audioSeed` until you get the BGM and sound effects you like.
 
 <br><br><br><br>
 
@@ -191,7 +191,7 @@ If `isPlayingBgm` is enabled, background music will be automatically generated a
 
 ### Finished!
 
-Now it's complete. There are [many more games](http://www.asahi-net.or.jp/~cs8k-cyu/browser.html) using `crisp-game-lib`. Please refer to them as well. All source code is available as [sample codes](https://github.com/abagames/crisp-game-lib-games/tree/main/docs).
+Now it's complete. There are [many](http://www.asahi-net.or.jp/~cs8k-cyu/one_button.html) [more](http://www.asahi-net.or.jp/~cs8k-cyu/browser.html) games using `crisp-game-lib`. Please refer to them as well. All source code is available as [sample codes](https://github.com/abagames/crisp-game-lib-11-games/blob/main/README.md).
 
 The final source code is as follows
 
@@ -207,7 +207,7 @@ characters = [];
 options = {
   isPlayingBgm: true,
   isReplayEnabled: true,
-  seed: 8,
+  audioSeed: 8,
 };
 
 /** @type {{angle: number, length: number, pin: Vector}} */

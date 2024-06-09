@@ -146,7 +146,7 @@ export const codes = [
   "BrowserForward",
   "BrowserBack",
 ];
-export type Code = typeof codes[number];
+export type Code = (typeof codes)[number];
 
 export type CodeState = {
   [key in Code]: {

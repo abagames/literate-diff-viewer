@@ -6,7 +6,7 @@
 
 ワンボタンミニゲームを作るには、ワンボタンにどのような機能を割り当てるかが重要です。詳しくは、以下の記事を参照ください。
 
-- [ワンボタンゲームをたくさん作ったので、その作り方をおさらいしたい](https://aba.hatenablog.com/entry/2021/08/08/195706)
+- [ワンボタンの可能性](https://abagames.github.io/joys-of-small-game-development/restrictions/one_button.html)
 
 今回作るゲームでは、ボタンに「伸びる」という機能を割り当てます。ゲームのルールを以下に示します。
 
@@ -181,7 +181,7 @@
 
 ### 音を調整する
 
-`isPlayingBgm` を有効にすると、BGM が自動生成され、ゲーム中に BGM が流れるようになります。また、`play` 関数で鳴る効果音も同様に自動生成されます。これらの音は、`options` において `seed` を設定することで変更できます。気に入った BGM や効果音になるまで、`seed` に色々な数値を設定してみましょう。
+`isPlayingBgm` を有効にすると、BGM が自動生成され、ゲーム中に BGM が流れるようになります。また、`play` 関数で鳴る効果音も同様に自動生成されます。これらの音は、`options` において `audioSeed` を設定することで変更できます。気に入った BGM や効果音になるまで、`audioSeed` に色々な数値を設定してみましょう。
 
 <br><br><br><br>
 
@@ -189,7 +189,7 @@
 
 ### 完成！
 
-これで完成です。`crisp-game-lib` を使ったゲームは[他にもたくさんある](http://www.asahi-net.or.jp/~cs8k-cyu/browser.html)ので、それらも参照ください。ソースコードはすべて[サンプルコード](https://github.com/abagames/crisp-game-lib-games/tree/main/docs)として公開されています。
+これで完成です。`crisp-game-lib` を使ったゲームは [他にも](http://www.asahi-net.or.jp/~cs8k-cyu/one_button.html) [たくさん](http://www.asahi-net.or.jp/~cs8k-cyu/browser.html) あるので、それらも参照ください。ソースコードはすべて[サンプルコード](https://github.com/abagames/crisp-game-lib-11-games/blob/main/README.md)として公開されています。
 
 最終的なソースコードは、以下の通りです。
 
@@ -205,7 +205,7 @@ characters = [];
 options = {
   isPlayingBgm: true,
   isReplayEnabled: true,
-  seed: 8,
+  audioSeed: 8,
 };
 
 /** @type {{angle: number, length: number, pin: Vector}} */

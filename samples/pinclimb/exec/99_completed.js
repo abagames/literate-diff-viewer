@@ -24,7 +24,7 @@ export const characters = [];
 export const options = {
   isPlayingBgm: true,
   isReplayEnabled: true,
-  seed: 8,
+  audioSeed: 8,
 };
 
 /** @type {{angle: number, length: number, pin: Vector}} */
